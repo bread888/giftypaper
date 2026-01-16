@@ -4,20 +4,22 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 import { getCollection } from 'astro:content';
-import FormattedDate from '../../components/FormattedDate.astro';
 
+// Recuperiamo le grafiche e le ordiniamo: la più recente apparirà come "Novità"
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="it">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<BaseHead title={`Collezioni | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
 		<style>
 			main {
 				width: 960px;
+				margin: auto;
+				padding: 3em 1em;
 			}
 			ul {
 				display: flex;
@@ -34,54 +36,67 @@ const posts = (await getCollection('blog')).sort(
 				text-decoration: none;
 				transition: 0.2s ease;
 			}
+			/* Stile per la Novità del Momento (il primo elemento) */
 			ul li:first-child {
 				width: 100%;
-				margin-bottom: 1rem;
+				margin-bottom: 2rem;
 				text-align: center;
 			}
 			ul li:first-child img {
 				width: 100%;
+				max-height: 480px;
+				object-fit: cover;
 			}
 			ul li:first-child .title {
-				font-size: 2.369rem;
+				font-size: 2.5rem;
+				margin-top: 1rem;
 			}
+			/* Stile per le 4 grafiche base */
 			ul li img {
 				margin-bottom: 0.5rem;
 				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
+				box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 			}
 			.title {
 				margin: 0;
 				color: rgb(var(--black));
-				line-height: 1;
+				line-height: 1.2;
+				font-weight: bold;
 			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
+			ul li a:hover .title {
 				color: rgb(var(--accent));
 			}
-			ul a:hover img {
+			ul li a:hover img {
+				transform: translateY(-5px);
+				box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+			}
+
+			/* Riquadro Prezzo GiftyPaper */
+			.price-container {
+				margin-top: 4rem;
+				padding: 2rem;
+				background-color: #ffffff;
+				border: 2px solid #eaeaea;
+				border-radius: 16px;
+				text-align: center;
 				box-shadow: var(--box-shadow);
 			}
+			.price-text {
+				font-size: 1.1rem;
+				color: #555;
+				margin-bottom: 0.5rem;
+			}
+			.price-amount {
+				display: block;
+				font-size: 2.2rem;
+				color: var(--accent);
+				font-weight: 800;
+			}
+
 			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
+				ul { gap: 1rem; }
+				ul li { width: 100%; text-align: center; }
+				ul li:first-child .title { font-size: 1.8rem; }
 			}
 		</style>
 	</head>
@@ -91,20 +106,24 @@ const posts = (await getCollection('blog')).sort(
 			<section>
 				<ul>
 					{
-						posts.map((post) => (
+						posts.map((post, index) => (
 							<li>
 								<a href={`/blog/${post.id}/`}>
-									<img width={720} height={360} src={post.data.heroImage} alt="" />
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
+									<img width={720} height={360} src={post.data.heroImage} alt={post.data.title} />
+									<h4 class="title">
+										{index === 0 ? `✨ ${post.data.title}` : post.data.title}
+									</h4>
 								</a>
 							</li>
 						))
 					}
 				</ul>
 			</section>
+
+			<div class="price-container">
+				<p class="price-text">Tutte le nostre grafiche sono stampate su carta premium.</p>
+				<span class="price-amount">A partire da 8,99 Euro</span>
+			</div>
 		</main>
 		<Footer />
 	</body>
