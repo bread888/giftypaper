@@ -1,0 +1,54 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { designKits } from '../content/designs';
+---
+
+<!doctype html>
+<html lang="it">
+	<head>
+		<BaseHead
+			title="Design | GiftyPaper"
+			description="Scopri i design firmati GiftyPaper e richiedi il kit che protegge i segreti di stampa."
+		/>
+	</head>
+	<body>
+		<Header />
+		<main class="site-shell">
+			<section class="design-hero">
+				<div class="design-hero-content">
+					<p class="hero-tag">Design protetto</p>
+					<h2>Design</h2>
+					<p>
+						Gli artwork disponibili in PDF sono coperti da watermark e visibili solo in anteprima.
+						Ogni kit viene rilasciato solo dopo approvazione: scrivi a <a href="mailto:hello@giftypaper.com">hello@giftypaper.com</a>
+						per ricevere versioni stampabili, oppure visita la nostra showroom privata.
+					</p>
+				</div>
+			</section>
+
+			<section class="design-grid" aria-label="Anteprime dei kit di design">
+				{designKits.map((kit) => (
+					<article class="design-card" key={kit.id}>
+						<div class="design-thumb" role="presentation"></div>
+						<div>
+							<h3>{kit.title}</h3>
+							<p>{kit.description}</p>
+							<p>{kit.detail}</p>
+						</div>
+						<div class="design-actions">
+							<a href={kit.pdf} target="_blank" rel="noopener noreferrer">
+								Anteprima PDF
+							</a>
+							<a class="secondary" href="mailto:hello@giftypaper.com">
+								Richiedi approvazione
+							</a>
+						</div>
+					</article>
+				))}
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>

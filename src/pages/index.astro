@@ -1,43 +1,80 @@
----
+﻿---
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+
+const collectionMoments = [
+    {
+        size: 'Piccolo',
+        hero: 'Sospeso tra baci e note di carta',
+        description:
+            'Il formato tascabile celebra i messaggi più intimi: carta soffice, inchiostro rosso carminio, il perfetto accompagnamento per una promessa tra due sguardi.',
+        image: '/Piccolo.png',
+    },
+    {
+        size: 'Medio',
+        hero: 'Un abbraccio avvolgente',
+        description:
+            'Il cuore della collezione con un mix satinato-matt per raccontare storie di complicità e rituali condivisi, pronto ad accogliere dedica, foto o un gioiello.',
+        image: '/Medio.png',
+    },
+    {
+        size: 'Grande',
+        hero: 'Un grande gesto che lascia un segno',
+        description:
+            'Lascia che il regalo si trasformi in opera d’arte: stampe in rilievo e contrasti metallici che amplificano l’effetto “wow” non appena si apre la scatola.',
+        image: '/Grande.png',
+    },
+];
 ---
 
 <!doctype html>
 <html lang="it">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>Benvenuti in GiftyPaper</h1>
-			<h2>"Dalla carta si fa il regalo"</h2>
-			<p>
-			<ul>	
-				<li>Crediamo che ogni dono meriti una presentazione unica.</li> 
-				<li>GiftyPaper non è solo un servizio di stampa, ma il primo passo per rendere indimenticabile un pensiero.</li> 
-			</ul>
-			</p>
-			
-			<p>
-				Con il nostro sistema integrato, puoi creare carte regalo personalizzate in pochi click.
-				Scegli il design, aggiungi il tuo tocco e trasforma un semplice foglio in un'emozione.
-			</p>
+    <head>
+        <BaseHead title={`San Valentino · ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+    </head>
+    <body>
+        <Header />
+        <main class="site-shell">
+            <section class="hero">
+                <p class="hero-tag">Edizione limitata 2026</p>
+                <h1>San Valentino Collection</h1>
+                <p class="hero-lead">
+                    Carte couture ispirate ai gesti rubati a Manhattan, Milano e Parigi: un’esperienza tattilmente romantica per ogni regalo.
+                </p>
+                <div class="hero-meta">
+                    <span>Produzione artigianale · Spedizione garantita entro il 10 febbraio</span>
+                    <a class="hero-link" href="#collezione">Scorri la collezione</a>
+                </div>
+            </section>
 
-			<p>Cosa puoi fare ora:</p>
-			
-				<li>Sfoglia i nostri <strong>design esclusivi</strong>.</li>
-				<li>Usa il configuratore per <strong>caricare le tue foto</strong>.</li>
-				<li>Scopri la nostra carta <strong>eco-sostenibile</strong>.</li>
-			</ul>
-			
-			<p>
-				Hai bisogno di aiuto? <a href="/contact">Contattaci</a> o consulta la nostra guida alla creazione.
-			</p>
-		</main>
-		<Footer />
-	</body>
+            <section id="collezione" class="sequence">
+                {collectionMoments.map((moment) => (
+                    <article class="product-card" key={moment.size}>
+                        <div class="product-visual">
+                            <p class="size-pill">{moment.size}</p>
+                            <img src={moment.image} alt={`Packaging ${moment.size} della San Valentino Collection`} loading="lazy" />
+                        </div>
+                        <div class="product-copy">
+                            <p class="product-hero">{moment.hero}</p>
+                            <h3>Immagini e parole che prendono forma</h3>
+                            <p>{moment.description}</p>
+                        </div>
+                    </article>
+                ))}
+            </section>
+
+            <section class="closing">
+                <p>
+                    Ogni pezzo è numerato e accompagnato da un foglio di poesia. Per prenotazioni, contattaci e scegli un momento speciale per il ritiro o la consegna a domicilio.
+                </p>
+                <div class="closing-links">
+                    <a href="https://www.tiktok.com/@giftypaper" target="_blank" rel="noreferrer">TikTok</a>
+                    <a href="https://www.instagram.com/giftypaper" target="_blank" rel="noreferrer">Instagram</a>
+                </div>
+            </section>
+        </main>
+        <Footer />
+    </body>
 </html>
