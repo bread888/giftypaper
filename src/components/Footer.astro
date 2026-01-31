@@ -1,4 +1,4 @@
----
+﻿---
 const today = new Date();
 ---
 
@@ -9,6 +9,31 @@ const today = new Date();
 		<a href="https://www.instagram.com/giftypaper" target="_blank" rel="noreferrer">Instagram</a>
 	</div>
 </footer>
+<script>
+	(() => {
+		const root = document.documentElement;
+		const baseMid = [220, 40, 84];
+		const baseEnd = [255, 150, 193];
+		const targetMid = [255, 82, 142];
+		const targetEnd = [255, 120, 185];
+		const lerp = (from, to, ratio) => Math.round(from + (to - from) * ratio);
+
+		const update = () => {
+			const docHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+			const viewport = window.innerHeight;
+			const maxScroll = Math.max(docHeight - viewport, 1);
+			const ratio = Math.min(1, window.scrollY / maxScroll);
+			const mid = baseMid.map((value, idx) => lerp(value, targetMid[idx], ratio)).join(',');
+			const end = baseEnd.map((value, idx) => lerp(value, targetEnd[idx], ratio)).join(',');
+			root.style.setProperty('--bg-mid', mid);
+			root.style.setProperty('--bg-end', end);
+		};
+
+		window.addEventListener('scroll', update, { passive: true });
+		window.addEventListener('resize', update);
+		update();
+	})();
+</script>
 <style>
 	.site-footer {
 		display: flex;

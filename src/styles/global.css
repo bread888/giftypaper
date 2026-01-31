@@ -1,10 +1,11 @@
-:root {
+﻿:root {
     --ink: 18, 18, 22;
-    --moon: 248, 245, 241;
     --rosewood: 123, 25, 42;
     --petal: 255, 153, 177;
     --pale-gold: 252, 240, 200;
-    --catalog-bg: 251, 232, 234; /* da aggiornare con il colore esatto di Catalogo.jpeg */
+    --bordeaux: 68, 12, 28;
+    --bg-mid: 220, 40, 84;
+    --bg-end: 255, 150, 193;
     --card-shadow: 0 20px 45px rgba(6, 4, 12, 0.15);
     --accent: #f24f70;
     --accent-strong: #ff7c8e;
@@ -49,9 +50,17 @@ a:hover {
 body {
     margin: 0;
     font-family: "Atkinson", "Inter", system-ui, sans-serif;
-    background-color: rgb(var(--catalog-bg));
-    background-image: radial-gradient(circle at top right, rgba(var(--petal), 0.3), transparent 48%),
-        linear-gradient(180deg, rgba(var(--moon), 0.98) 0%, rgba(255, 255, 255, 0.95) 45%, rgba(255, 255, 255, 0.75) 100%);
+    background-color: rgb(var(--bordeaux));
+    background-image: radial-gradient(circle at top right, rgba(255, 255, 255, 0.15), transparent 45%),
+        linear-gradient(
+            180deg,
+            rgb(var(--bordeaux)) 0%,
+            rgba(var(--bg-mid), 0.9) 35%,
+            rgba(var(--bg-end), 0.95) 65%,
+            rgba(var(--bg-end), 1) 100%
+        );
+    background-attachment: fixed;
+    background-size: cover;
     color: rgb(var(--ink));
     min-height: 100vh;
     scroll-behavior: smooth;
@@ -107,26 +116,13 @@ main,
     justify-content: center;
     gap: 1.5rem;
     font-size: 0.95rem;
-    color: rgba(var(--ink), 0.7);
-}
-
-.hero-link {
-    padding: 0.8rem 1.6rem;
-    border-radius: 999px;
-    border: 1px solid rgba(var(--rosewood), 0.35);
-    text-transform: uppercase;
-    font-size: 0.85rem;
-    letter-spacing: 0.2em;
-    color: rgb(var(--rosewood));
-    text-decoration: none;
-    transition: background 0.3s ease, color 0.3s ease;
+    color: rgba(var(--ink), 0.75);
 }
 
 .sequence {
     display: flex;
     flex-direction: column;
     gap: 2.75rem;
-    scroll-snap-type: y mandatory;
 }
 
 .product-card {
@@ -139,7 +135,6 @@ main,
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
     align-items: center;
-    scroll-snap-align: start;
 }
 
 .product-visual {
@@ -182,12 +177,57 @@ main,
     font-size: 1.05rem;
 }
 
-.product-hero {
-    font-weight: 700;
-    color: rgb(var(--rosewood));
-    margin: 0;
-    letter-spacing: 0.08em;
+.product-code {
+    font-size: 0.75rem;
+    letter-spacing: 0.35em;
     text-transform: uppercase;
+    color: rgba(var(--ink), 0.6);
+    margin: 0;
+}
+
+.card-link {
+    display: inline-flex;
+    margin-top: 1rem;
+    padding: 0.55rem 1.2rem;
+    border-radius: 999px;
+    border: 1px solid rgba(var(--petal), 0.6);
+    background: rgba(255, 255, 255, 0.9);
+    color: rgb(var(--rosewood));
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-decoration: none;
+    transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.card-link:hover {
+    background: rgb(var(--rosewood));
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+.btn-pill {
+    padding: 0.75rem 1.8rem;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    background: rgb(var(--rosewood));
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-pill.alt {
+    background: #fff;
+    color: rgb(var(--rosewood));
+    border-color: rgba(var(--rosewood), 0.3);
+}
+
+.btn-pill:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .closing {
@@ -199,7 +239,7 @@ main,
 }
 
 .closing p {
-    margin: 0 0 1rem;
+    margin: 0 0 1rem 0;
     font-size: 1rem;
     color: rgba(var(--ink), 0.85);
 }
@@ -226,6 +266,67 @@ main,
 .closing-links a:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+}
+
+.contact-section {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 30px;
+    padding: 2rem;
+    border: 1px solid rgba(var(--petal), 0.4);
+    box-shadow: var(--card-shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.contact-form {
+    margin-top: 1rem;
+    display: grid;
+    gap: 1rem;
+}
+
+.contact-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    color: rgba(var(--ink), 0.8);
+    text-transform: uppercase;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    border-radius: 14px;
+    border: 1px solid rgba(var(--petal), 0.6);
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    font-family: inherit;
+    resize: vertical;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.contact-form textarea {
+    min-height: 120px;
+}
+
+.contact-form button {
+    align-self: flex-start;
+    padding: 0.85rem 2rem;
+    border-radius: 999px;
+    border: none;
+    background: linear-gradient(135deg, rgba(var(--rosewood), 0.9), rgba(var(--accent), 1));
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.contact-form button:hover {
+    transform: translateY(-2px);
 }
 
 .design-hero {
@@ -259,6 +360,16 @@ main,
     font-size: clamp(2.2rem, 4vw, 3rem);
     letter-spacing: 0.1em;
     text-transform: uppercase;
+}
+
+.design-hero-content p {
+    margin: 0;
+    color: #fff;
+}
+
+.design-hero-content a {
+    color: #fff;
+    text-decoration: underline;
 }
 
 .design-grid {
@@ -312,6 +423,15 @@ main,
     pointer-events: none;
 }
 
+.design-thumb.unlocked::after {
+    content: "";
+}
+
+.design-thumb.unlocked {
+    background-size: cover;
+    background-position: center;
+}
+
 .design-actions {
     display: flex;
     gap: 0.75rem;
@@ -338,6 +458,181 @@ main,
 
 .design-actions a:hover {
     transform: translateY(-1px);
+}
+
+.preview-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 5, 5, 0.65);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 20;
+}
+
+.preview-modal.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.preview-card {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 26px;
+    max-width: 420px;
+    width: min(90vw, 420px);
+    box-shadow: var(--card-shadow);
+    position: relative;
+}
+
+.modal-close {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.8rem;
+    border: none;
+    background: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: rgba(var(--ink), 0.7);
+}
+
+.modal-socials {
+    display: flex;
+    gap: 0.6rem;
+    margin: 1rem 0;
+}
+
+.modal-socials a {
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    border-bottom: 1px solid transparent;
+    color: rgb(var(--rosewood));
+    text-decoration: none;
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.modal-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    letter-spacing: 0.2em;
+    font-size: 0.75rem;
+    color: rgba(var(--ink), 0.7);
+    text-transform: uppercase;
+}
+
+.modal-form input {
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    border: 1px solid rgba(var(--petal), 0.6);
+}
+
+.modal-form button {
+    margin-top: 0.4rem;
+    padding: 0.9rem 1.4rem;
+    border-radius: 999px;
+    border: none;
+    background: linear-gradient(135deg, rgba(var(--rosewood), 0.9), rgba(var(--accent), 1));
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    font-size: 0.75rem;
+    cursor: pointer;
+    width: 100%;
+    display: inline-flex;
+    justify-content: center;
+}
+
+.modal-feedback {
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    min-height: 1.3rem;
+    color: rgba(var(--rosewood), 0.8);
+}
+
+.about-hero {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 30px;
+    padding: 2rem;
+    border: 1px solid rgba(var(--petal), 0.35);
+    box-shadow: var(--card-shadow);
+}
+
+.about-hero h1 {
+    margin-top: 0;
+    font-size: 2rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgb(var(--rosewood));
+}
+
+.about-hero p {
+    color: rgba(var(--ink), 0.8);
+    line-height: 1.6;
+}
+
+.about-shell {
+    gap: 2rem;
+}
+
+.about-hero {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem;
+    align-items: center;
+    padding: 2rem;
+    border-radius: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(var(--petal), 0.35);
+    box-shadow: var(--card-shadow);
+}
+
+.about-hero-text p {
+    margin-bottom: 1rem;
+    color: rgba(var(--ink), 0.85);
+    line-height: 1.6;
+}
+
+.about-hero-logo {
+    text-align: center;
+}
+
+.about-hero-logo img {
+    width: min(360px, 100%);
+    border-radius: 40px;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.25));
+}
+
+.about-pillars {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.pillar {
+    background: rgba(255, 255, 255, 0.85);
+    padding: 1rem;
+    border-radius: 18px;
+    border: 1px solid rgba(var(--petal), 0.25);
+}
+
+.pill-title {
+    margin: 0 0 0.35rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgb(var(--rosewood));
 }
 
 @keyframes float {

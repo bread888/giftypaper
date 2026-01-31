@@ -7,23 +7,26 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 const collectionMoments = [
     {
         size: 'Piccolo',
-        hero: 'Sospeso tra baci e note di carta',
+        code: 'SVCGP0001',
+        title: 'Piccoli Tesori',
         description:
-            'Il formato tascabile celebra i messaggi più intimi: carta soffice, inchiostro rosso carminio, il perfetto accompagnamento per una promessa tra due sguardi.',
+            'Dimensioni perfette, spreco zero. Basta ritagliare fogli enormi per impacchettare piccoli oggetti! Questo kit offre la misura ideale per rivestire perfettamente scatole di carte da gioco o piccoli cofanetti, garantendo angoli puliti e una chiusura impeccabile grazie al nastro incluso.',
         image: '/Piccolo.png',
     },
     {
         size: 'Medio',
-        hero: 'Un abbraccio avvolgente',
+        code: 'SVCGP0002',
+        title: 'Kit Passepartout',
         description:
-            'Il cuore della collezione con un mix satinato-matt per raccontare storie di complicità e rituali condivisi, pronto ad accogliere dedica, foto o un gioiello.',
+            'Non troppo piccolo, non troppo grande: questo kit è il vero "passepartout" del catalogo. Progettato per chi vuole regalare un libro, un capo di abbigliamento o una bottiglia speciale, garantendo una copertura totale.',
         image: '/Medio.png',
     },
     {
         size: 'Grande',
-        hero: 'Un grande gesto che lascia un segno',
+        code: 'SVCGP0003',
+        title: 'The Essential',
         description:
-            'Lascia che il regalo si trasformi in opera d’arte: stampe in rilievo e contrasti metallici che amplificano l’effetto “wow” non appena si apre la scatola.',
+            'È il formato classico, quello che non può mancare in casa, pensato per chi vuole avvolgere regali voluminosi con un unico foglio, garantendo una precisione sartoriale e una copertura totale. Che sia una scatola di scarpe, un puzzle da 1000 pz o un piccolo elettrodomestico, ogni spigolo sarà vestito di eleganza.',
         image: '/Grande.png',
     },
 ];
@@ -44,28 +47,28 @@ const collectionMoments = [
                     Carte couture ispirate ai gesti rubati a Manhattan, Milano e Parigi: un’esperienza tattilmente romantica per ogni regalo.
                 </p>
                 <div class="hero-meta">
-                    <span>Produzione artigianale · Spedizione garantita entro il 10 febbraio</span>
-                    <a class="hero-link" href="#collezione">Scorri la collezione</a>
+                    <span>Produzione artigianale · Dalla carta si fa il regalo</span>
                 </div>
             </section>
 
             <section id="collezione" class="sequence">
                 {collectionMoments.map((moment) => (
-                    <article class="product-card" key={moment.size}>
+                    <article class="product-card" key={moment.code}>
                         <div class="product-visual">
                             <p class="size-pill">{moment.size}</p>
-                            <img src={moment.image} alt={`Packaging ${moment.size} della San Valentino Collection`} loading="lazy" />
+                            <img src={moment.image} alt={`Packaging ${moment.title} della San Valentino Collection`} loading="lazy" />
                         </div>
                         <div class="product-copy">
-                            <p class="product-hero">{moment.hero}</p>
-                            <h3>Immagini e parole che prendono forma</h3>
+                            <p class="product-code">{moment.code}</p>
+                            <h3>{moment.title}</h3>
                             <p>{moment.description}</p>
+                            <a href="#contact-form" class="card-link">Prenota questo kit</a>
                         </div>
                     </article>
                 ))}
             </section>
 
-            <section class="closing">
+            <section id="contact-form" class="closing contact-section">
                 <p>
                     Ogni pezzo è numerato e accompagnato da un foglio di poesia. Per prenotazioni, contattaci e scegli un momento speciale per il ritiro o la consegna a domicilio.
                 </p>
@@ -73,6 +76,21 @@ const collectionMoments = [
                     <a href="https://www.tiktok.com/@giftypaper" target="_blank" rel="noreferrer">TikTok</a>
                     <a href="https://www.instagram.com/giftypaper" target="_blank" rel="noreferrer">Instagram</a>
                 </div>
+                <form
+                    class="contact-form"
+                    action="mailto:info@giftypaper.it?subject=Richiesta%20San%20Valentino"
+                    method="GET"
+                >
+                    <label>
+                        <span>La tua mail</span>
+                        <input type="email" name="Email" placeholder="nome@esempio.com" required />
+                    </label>
+                    <label>
+                        <span>Descrivi richieste e budget</span>
+                        <textarea name="Messaggio" placeholder="Quanto ti serve? Quali formati preferisci?" required></textarea>
+                    </label>
+                    <button type="submit">Invia richiesta</button>
+                </form>
             </section>
         </main>
         <Footer />

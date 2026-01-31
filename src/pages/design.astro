@@ -3,6 +3,8 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { designKits } from '../content/designs';
+
+const designKitJson = JSON.stringify(designKits).replace(/</g, '\\u003c');
 ---
 
 <!doctype html>
@@ -10,7 +12,7 @@ import { designKits } from '../content/designs';
 	<head>
 		<BaseHead
 			title="Design | GiftyPaper"
-			description="Scopri i design firmati GiftyPaper e richiedi il kit che protegge i segreti di stampa."
+			description="Scopri i design firmati GiftyPaper e accedi alle anteprime protette da password."
 		/>
 	</head>
 	<body>
@@ -21,16 +23,15 @@ import { designKits } from '../content/designs';
 					<p class="hero-tag">Design protetto</p>
 					<h2>Design</h2>
 					<p>
-						Gli artwork disponibili in PDF sono coperti da watermark e visibili solo in anteprima.
-						Ogni kit viene rilasciato solo dopo approvazione: scrivi a <a href="mailto:hello@giftypaper.com">hello@giftypaper.com</a>
-						per ricevere versioni stampabili, oppure visita la nostra showroom privata.
+						Gli artwork sono mostrati in anteprima con watermark. Per accedere all’anteprima ti serve la
+						password disponibile sui nostri canali social: TikTok e Instagram.
 					</p>
 				</div>
 			</section>
 
 			<section class="design-grid" aria-label="Anteprime dei kit di design">
 				{designKits.map((kit) => (
-					<article class="design-card" key={kit.id}>
+					<article class="design-card" key={kit.id} data-kit={kit.id}>
 						<div class="design-thumb" role="presentation"></div>
 						<div>
 							<h3>{kit.title}</h3>
@@ -38,17 +39,87 @@ import { designKits } from '../content/designs';
 							<p>{kit.detail}</p>
 						</div>
 						<div class="design-actions">
-							<a href={kit.pdf} target="_blank" rel="noopener noreferrer">
-								Anteprima PDF
-							</a>
-							<a class="secondary" href="mailto:hello@giftypaper.com">
-								Richiedi approvazione
-							</a>
+							<button type="button" class="preview-btn btn-pill alt" data-kit={kit.id}>
+								Anteprima
+							</button>
 						</div>
 					</article>
 				))}
 			</section>
+
+			<div class="preview-modal" aria-hidden="true">
+				<div class="preview-card">
+					<button type="button" class="modal-close" aria-label="Chiudi">×</button>
+					<p>
+						Trova la password all'interno dei nostri contenuti TikTok o Instagram, poi inseriscila nel form
+						per sbloccare l'anteprima.
+					</p>
+					<div class="modal-socials">
+						<a href="https://www.tiktok.com/@giftypaper" target="_blank" rel="noreferrer">TikTok</a>
+						<a href="https://www.instagram.com/giftypaper" target="_blank" rel="noreferrer">Instagram</a>
+					</div>
+					<form class="modal-form">
+						<label>
+							<span>Password</span>
+							<input type="password" name="password" autocomplete="off" required />
+						</label>
+						<button type="submit" class="btn-pill">INVIO</button>
+					</form>
+					<p class="modal-feedback" role="status"></p>
+				</div>
+			</div>
 		</main>
 		<Footer />
+		<script id="design-data" type="application/json" set:html={designKitJson}></script>
+		<script type="module">
+			(() => {
+				const kits = JSON.parse(document.querySelector('#design-data')?.textContent ?? '[]');
+				const modal = document.querySelector('.preview-modal');
+				const feedback = modal?.querySelector('.modal-feedback');
+				const form = modal?.querySelector('.modal-form');
+				const close = modal?.querySelector('.modal-close');
+				let currentId = null;
+
+				const toggleModal = (show) => {
+					if (show) {
+						modal?.classList.add('active');
+						modal?.setAttribute('aria-hidden', 'false');
+					} else {
+						modal?.classList.remove('active');
+						modal?.setAttribute('aria-hidden', 'true');
+						currentId = null;
+					}
+				};
+
+				document.querySelectorAll('.preview-btn').forEach((btn) => {
+					btn.addEventListener('click', () => {
+						currentId = btn.dataset.kit;
+						form?.reset();
+						if (feedback) feedback.textContent = '';
+						toggleModal(true);
+					});
+				});
+
+				close?.addEventListener('click', () => toggleModal(false));
+
+				form?.addEventListener('submit', (event) => {
+					event.preventDefault();
+					const value = (form.password.value ?? '').trim();
+					const kit = kits.find((item) => item.id === currentId);
+					if (!kit) return;
+					if (value.toLowerCase() === kit.password.toLowerCase()) {
+						const card = document.querySelector(`[data-kit="${kit.id}"] .design-thumb`);
+						if (card) {
+							card.style.backgroundImage = `url('${kit.previewImg}')`;
+							card.classList.add('unlocked');
+						}
+						if (feedback) feedback.textContent = 'Password corretta, ora vedi l’anteprima.';
+						setTimeout(() => toggleModal(false), 900);
+					} else if (feedback) {
+						feedback.textContent = 'Password errata, controlla TikTok o Instagram.';
+					}
+				});
+			})();
+		</script>
 	</body>
 </html>

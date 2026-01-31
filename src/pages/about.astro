@@ -1,33 +1,48 @@
+﻿---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 ---
-import Layout from '../layouts/BlogPost.astro';
----
 
-<Layout
-	title="Chi Siamo"
-	description="La storia di GiftyPaper e la nostra passione per i regali."
-	pubDate={new Date('January 16 2026')}
-	heroImage="/logo.jpeg"
->
-	<p>
-		GiftyPaper nasce da un'idea semplice: il regalo inizia nel momento in cui lo porgi, 
-		ancora prima che venga scartato. La nostra missione è elevare l'esperienza del dono 
-		attraverso carte regalo personalizzate di alta qualità. 
-	</p>
-
-	<p>
-		Ogni foglio che stampiamo racconta una storia. Utilizziamo tecniche di stampa 
-		all'avanguardia e materiali selezionati per garantire che ogni trama e ogni colore 
-		rendano giustizia ai tuoi sentimenti. 
-	</p>
-
-	<p>
-		Per noi di GiftyPaper, la sostenibilità è fondamentale. "Dalla carta si fa il regalo" 
-		significa anche rispettare la materia prima: utilizziamo esclusivamente carta 
-		certificata e processi a basso impatto ambientale. 
-	</p>
-
-	<p>
-		Siamo un team di creativi e artigiani digitali pronti ad aiutarti a confezionare 
-		i tuoi momenti più belli. Benvenuti nella nostra famiglia. 
-	</p>
-</Layout>
+<!doctype html>
+<html lang="it">
+    <head>
+        <BaseHead title="Chi siamo" description="La missione artigianale e la cura dei materiali di GiftyPaper." />
+    </head>
+    <body>
+        <Header />
+        <main class="site-shell about-shell">
+            <section class="about-hero">
+                <div class="about-hero-text">
+                    <p>
+                        GiftyPaper nasce da un desiderio semplice: che il regalo inizi nel momento in cui lo porgi.
+                        Lavoriamo sulla carta e sull’esperienza, elevando ogni dono con kit couture che sanno raccontare
+                        un’emozione.
+                    </p>
+                    <p>
+                        I nostri artigiani curano ogni passaggio: dalla scelta di carte certificate, al pre-press digitale,
+                        fino a finiture in rilievo o foil che fanno risuonare il messaggio che vuoi trasmettere.
+                    </p>
+                    <div class="about-pillars">
+                        <div class="pillar">
+                            <p class="pill-title">Precisione sartoriale</p>
+                            <p>Formati che si adattano a regali di ogni dimensione grazie a tagli e pieghe calcolate a mano.</p>
+                        </div>
+                        <div class="pillar">
+                            <p class="pill-title">Spreco zero</p>
+                            <p>Monitoriamo ogni foglio: preferiamo kit su misura al posto di grossi rotoli sprecati.</p>
+                        </div>
+                        <div class="pillar">
+                            <p class="pill-title">Rituale digitale + umano</p>
+                            <p>I design sono approvati con il cliente prima della stampa, perché ogni dettaglio deve brillare.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-hero-logo">
+                    <img src="/logo.jpeg" alt="Logo GiftyPaper" />
+                </div>
+            </section>
+        </main>
+        <Footer />
+    </body>
+</html>
