@@ -3,7 +3,12 @@ const today = new Date();
 ---
 
 <footer class="site-footer">
-	<p>&copy; {today.getFullYear()} GiftyPaper · Tutti i diritti riservati.</p>
+	<div class="footer-meta">
+		<p>&copy; {today.getFullYear()} GiftyPaper · Tutti i diritti riservati.</p>
+		<div class="footer-links">
+			<a href="/privacy">Privacy & Cookie</a>
+		</div>
+	</div>
 	<div class="footer-socials">
 		<a href="https://www.tiktok.com/@giftypaper" target="_blank" rel="noreferrer">TikTok</a>
 		<a href="https://www.instagram.com/giftypaper" target="_blank" rel="noreferrer">Instagram</a>
@@ -37,12 +42,38 @@ const today = new Date();
 <style>
 	.site-footer {
 		display: flex;
-		flex-wrap: wrap;
-		gap: 1rem;
+		flex-direction: column;
 		align-items: center;
-		justify-content: center;
+		gap: 1rem;
 		padding: 2rem 1rem 3rem;
 		color: rgba(var(--ink), 0.8);
+		text-align: center;
+	}
+
+	.footer-meta {
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+		align-items: center;
+	}
+
+	.footer-links {
+		display: flex;
+		gap: 0.5rem;
+	}
+
+	.footer-links a {
+		text-transform: uppercase;
+		letter-spacing: 0.3em;
+		font-size: 0.7rem;
+		color: rgb(var(--rosewood));
+		text-decoration: none;
+		border-bottom: 1px solid transparent;
+		padding-bottom: 0.1rem;
+	}
+
+	.footer-links a:hover {
+		border-color: rgb(var(--rosewood));
 	}
 
 	.footer-socials {

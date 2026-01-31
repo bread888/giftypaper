@@ -225,6 +225,15 @@ main,
     border-color: rgba(var(--rosewood), 0.3);
 }
 
+.btn-pill.pink-text {
+    color: var(--accent-strong);
+}
+
+.btn-pill.alt.pink-text {
+    color: var(--accent-strong);
+    border-color: rgba(var(--accent), 0.4);
+}
+
 .btn-pill:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -538,15 +547,6 @@ main,
 
 .modal-form button {
     margin-top: 0.4rem;
-    padding: 0.9rem 1.4rem;
-    border-radius: 999px;
-    border: none;
-    background: linear-gradient(135deg, rgba(var(--rosewood), 0.9), rgba(var(--accent), 1));
-    color: #fff;
-    text-transform: uppercase;
-    letter-spacing: 0.3em;
-    font-size: 0.75rem;
-    cursor: pointer;
     width: 100%;
     display: inline-flex;
     justify-content: center;
@@ -578,6 +578,54 @@ main,
 .about-hero p {
     color: rgba(var(--ink), 0.8);
     line-height: 1.6;
+}
+
+.privacy-hero {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
+    border-radius: 36px;
+    border: 1px solid rgba(var(--petal), 0.35);
+    box-shadow: var(--card-shadow);
+    text-align: center;
+}
+
+.privacy-hero h1 {
+    margin: 0;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgb(var(--rosewood));
+    font-size: 2rem;
+}
+
+.privacy-hero p {
+    margin: 0.5rem 0 0;
+    color: rgba(var(--ink), 0.7);
+    font-size: 0.9rem;
+    letter-spacing: 0.3em;
+}
+
+.privacy-section {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 30px;
+    padding: 1.75rem;
+    border: 1px solid rgba(var(--petal), 0.35);
+    box-shadow: var(--card-shadow);
+}
+
+.privacy-section h2 {
+    margin-top: 0;
+    font-size: 1.4rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgb(var(--rosewood));
+}
+
+.privacy-section ul {
+    margin: 0.75rem 0 0 1rem;
+    padding: 0;
+    list-style: disc;
+    color: rgba(var(--ink), 0.75);
+    line-height: 1.5;
 }
 
 .about-shell {
