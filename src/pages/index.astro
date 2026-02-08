@@ -62,7 +62,14 @@ const collectionMoments = [
                             <p class="product-code">{moment.code}</p>
                             <h3>{moment.title}</h3>
                             <p>{moment.description}</p>
-                            <a href="#contact-form" class="card-link">Prenota questo kit</a>
+                            <a
+                                href="#contact-form"
+                                class="card-link"
+                                data-kit-code={moment.code}
+                                data-kit-title={moment.title}
+                            >
+                                Prenota questo kit
+                            </a>
                         </div>
                     </article>
                 ))}
@@ -76,22 +83,108 @@ const collectionMoments = [
                     <a href="https://www.tiktok.com/@giftypaper" target="_blank" rel="noreferrer">TikTok</a>
                     <a href="https://www.instagram.com/giftypaper" target="_blank" rel="noreferrer">Instagram</a>
                 </div>
-                <form
-                    class="contact-form"
-                    action="mailto:info@giftypaper.it?subject=Richiesta%20San%20Valentino"
-                    method="GET"
-                >
+                <form id="contactForm" class="contact-form" novalidate>
                     <label>
                         <span>La tua mail</span>
-                        <input type="email" name="Email" placeholder="nome@esempio.com" required />
+                        <input type="email" name="email" placeholder="nome@esempio.com" required />
                     </label>
                     <label>
                         <span>Descrivi richieste e budget</span>
-                        <textarea name="Messaggio" placeholder="Quanto ti serve? Quali formati preferisci?" required></textarea>
+                        <textarea name="message" placeholder="Quanto ti serve? Quali formati preferisci?" required></textarea>
                     </label>
+                    <input type="hidden" name="kitCode" value="" />
+                    <p class="form-feedback" data-feedback role="status" aria-live="polite"></p>
                     <button type="submit" class="btn-pill alt pink-text">INVIA RICHIESTA</button>
                 </form>
             </section>
+            <script type="module">
+                document.addEventListener('DOMContentLoaded', () => {
+                    const form = document.querySelector('#contactForm');
+                    if (!form) {
+                        return;
+                    }
+
+                    const feedback = document.querySelector('[data-feedback]');
+                    const messageField = form.querySelector('textarea[name="message"]');
+                    const kitField = form.querySelector('input[name="kitCode"]');
+                    const submitButton = form.querySelector('button[type="submit"]');
+                    const kitLinks = document.querySelectorAll('[data-kit-code]');
+
+                    const buildKitMessage = (code, title) => {
+                        if (!code || !title) {
+                            return '';
+                        }
+
+                        return `Vorrei avere informazioni in merito a ${code}, ${title}`;
+                    };
+
+                    kitLinks.forEach((link) => {
+                        link.addEventListener('click', () => {
+                            const kitCode = link.dataset.kitCode ?? '';
+                            const kitTitle = link.dataset.kitTitle ?? '';
+                            if (kitField) {
+                                kitField.value = kitCode;
+                            }
+                            if (messageField) {
+                                messageField.value = buildKitMessage(kitCode, kitTitle);
+                                messageField.focus();
+                            }
+                        });
+                    });
+
+                    form.addEventListener('submit', async (event) => {
+                        event.preventDefault();
+                        if (feedback) {
+                            feedback.textContent = '';
+                        }
+                        if (!form.reportValidity()) {
+                            return;
+                        }
+
+                        const formData = new FormData(form);
+                        const payload = {
+                            email: (formData.get('email') ?? '').toString().trim(),
+                            message: (formData.get('message') ?? '').toString().trim(),
+                            kitCode: (formData.get('kitCode') ?? '').toString().trim(),
+                        };
+
+                        if (!payload.email || !payload.message) {
+                            if (feedback) {
+                                feedback.textContent = 'Inserisci la mail e descrivi la tua richiesta.';
+                            }
+                            return;
+                        }
+
+                        submitButton?.setAttribute('disabled', 'true');
+                        try {
+                            const response = await fetch('/api/contact', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(payload),
+                            });
+
+                            if (!response.ok) {
+                                const errorText = await response.text().catch(() => '');
+                                throw new Error(errorText || 'Errore nell\'invio della richiesta.');
+                            }
+
+                            if (feedback) {
+                                feedback.textContent = 'Richiesta inviata! Ti risponderemo al più presto.';
+                            }
+                            form.reset();
+                        } catch (error) {
+                            console.error(error);
+                            if (feedback) {
+                                feedback.textContent = 'Qualcosa è andato storto, riprova tra poco.';
+                            }
+                        } finally {
+                            submitButton?.removeAttribute('disabled');
+                        }
+                    });
+                });
+            </script>
         </main>
         <Footer />
     </body>

@@ -55,6 +55,19 @@ All commands are run from the root of the project, from a terminal:
 | `npm run build && npm run deploy` | Deploy your production site to Cloudflare        |
 | `npm wrangler tail`               | View real-time logs for all Workers              |
 
+## ✉️ Contact form delivery
+
+The “Prenota questo kit” flow now submits form data to `POST /api/contact`, which forwards the request to SendGrid so you receive the customer email without relying on a mail client.
+
+- `CONTACT_SENDGRID_API_KEY` (required): the SendGrid API key stored as a secret (e.g., `wrangler secret put CONTACT_SENDGRID_API_KEY`).
+- `CONTACT_FROM_EMAIL` (optional): the sender address that appears in the delivered email (defaults to `no-reply@giftypaper.it`).
+- `CONTACT_TO_EMAIL` (optional): where the requests are sent (defaults to `info@giftypaper.it`).
+
+Kit buttons now prefill the message textarea with the appropriate code and title (e.g., “Vorrei avere informazioni in merito a SVCGP0001, Kit Piccoli Tesori”).
+
+You can test the flow locally with `npm run dev`; server-side errors are written to the console and surfaced in the feedback line under the textarea.
+
+
 ## 👀 Want to learn more?
 
 Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
