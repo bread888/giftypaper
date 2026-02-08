@@ -1,5 +1,7 @@
 import type { APIRoute } from 'astro';
 
+export const prerender = false;
+
 type ContactPayload = {
     email?: string | null;
     message?: string | null;
