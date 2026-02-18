@@ -17,12 +17,30 @@ const today = new Date();
 <script>
 	(() => {
 		const root = document.documentElement;
-		const baseMid = [220, 40, 84];
-		const baseEnd = [255, 150, 193];
-		const targetMid = [255, 82, 142];
-		const targetEnd = [255, 120, 185];
+		const baseMid = [255, 240, 140];
+		const baseEnd = [255, 205, 65];
+		const targetMid = [25, 75, 45];
+		const targetEnd = [15, 48, 30];
 		const lerp = (from, to, ratio) => Math.round(from + (to - from) * ratio);
 
+		const prefersDarkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+		const lightTextTone = 'rgba(var(--ink), 0.82)';
+		const lightMetaTone = 'rgba(var(--ink), 0.65)';
+		const darkTextTone = 'rgba(255, 255, 255, 0.92)';
+		const darkMetaTone = 'rgba(255, 255, 255, 0.72)';
+		const applyThemeTone = (isDark) => {
+			root.style.setProperty('--footer-text-color', isDark ? darkTextTone : lightTextTone);
+			root.style.setProperty('--footer-meta-color', isDark ? darkMetaTone : lightMetaTone);
+		};
+		applyThemeTone(prefersDarkQuery.matches);
+		if (typeof prefersDarkQuery.addEventListener === 'function') {
+			prefersDarkQuery.addEventListener('change', (event) => applyThemeTone(event.matches));
+		} else if (typeof prefersDarkQuery.addListener === 'function') {
+			prefersDarkQuery.addListener((event) => applyThemeTone(event.matches));
+		}
+
+		const lightLinkColor = 'rgba(255, 255, 255, 0.95)';
+		const darkLinkColor = 'rgb(var(--ink))';
 		const update = () => {
 			const docHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
 			const viewport = window.innerHeight;
@@ -32,6 +50,10 @@ const today = new Date();
 			const end = baseEnd.map((value, idx) => lerp(value, targetEnd[idx], ratio)).join(',');
 			root.style.setProperty('--bg-mid', mid);
 			root.style.setProperty('--bg-end', end);
+			const linkColor = ratio > 0.5 ? lightLinkColor : darkLinkColor;
+			const borderColor = ratio > 0.5 ? 'rgba(255, 255, 255, 0.6)' : 'rgba(var(--ink), 0.4)';
+			root.style.setProperty('--footer-link-color', linkColor);
+			root.style.setProperty('--footer-link-border', borderColor);
 		};
 
 		window.addEventListener('scroll', update, { passive: true });
@@ -46,7 +68,7 @@ const today = new Date();
 		align-items: center;
 		gap: 1rem;
 		padding: 2rem 1rem 3rem;
-		color: rgba(var(--ink), 0.8);
+		color: var(--footer-text-color, rgba(var(--ink), 0.8));
 		text-align: center;
 	}
 
@@ -55,6 +77,11 @@ const today = new Date();
 		flex-direction: column;
 		gap: 0.35rem;
 		align-items: center;
+	}
+
+	.footer-meta p {
+		margin: 0;
+		color: var(--footer-meta-color, rgba(var(--ink), 0.65));
 	}
 
 	.footer-links {
@@ -66,14 +93,15 @@ const today = new Date();
 		text-transform: uppercase;
 		letter-spacing: 0.3em;
 		font-size: 0.7rem;
-		color: rgb(var(--rosewood));
+		color: var(--footer-link-color, rgb(var(--rosewood)));
 		text-decoration: none;
 		border-bottom: 1px solid transparent;
+		border-color: var(--footer-link-border, rgba(var(--rosewood), 0.4));
 		padding-bottom: 0.1rem;
 	}
 
 	.footer-links a:hover {
-		border-color: rgb(var(--rosewood));
+		border-color: var(--footer-link-border, rgb(var(--rosewood)));
 	}
 
 	.footer-socials {
@@ -86,12 +114,13 @@ const today = new Date();
 		font-size: 0.8rem;
 		letter-spacing: 0.3em;
 		text-decoration: none;
-		color: rgb(var(--rosewood));
+		color: var(--footer-link-color, rgb(var(--rosewood)));
 		border-bottom: 1px solid transparent;
+		border-color: var(--footer-link-border, rgba(var(--rosewood), 0.4));
 		padding-bottom: 0.1rem;
 	}
 
 	.footer-socials a:hover {
-		border-color: rgb(var(--rosewood));
+		border-color: var(--footer-link-border, rgb(var(--rosewood)));
 	}
 </style>

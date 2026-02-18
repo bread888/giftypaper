@@ -8,35 +8,95 @@ export type DesignKit = {
     password: string;
 };
 
-export const designKits: DesignKit[] = [
+export type DesignCollection = {
+    id: string;
+    title: string;
+    description: string;
+    tag: string;
+    tagVariant?: string;
+    style?: 'love' | 'default';
+    kits: DesignKit[];
+};
+
+export const designCollections: DesignCollection[] = [
     {
-        id: 'xoxo',
-        title: 'xoxo vibes',
-        description:
-		
-        'Raffinata ed essenziale. Il fondo rosa antico fa da palcoscenico a un delicato pattern di "XOXO" scritti in un corsivo leggero e sinuoso. È la scelta perfetta per chi vuole dire "ti voglio bene" con uno stile pulito, dolce ma mai scontato',			
-        previewImg: '/desing-previews/xoxo.png',
-        password: 'xoxosvc26',
+        id: 'fdd',
+        title: 'Festa della Donna 2026',
+        description: 'Nuove grafiche dedicate alla mimosa e al potere femminile, guardate ma protette dal watermark.',
+        tag: 'Nuovi design',
+        kits: [
+            {
+                id: 'kit-mimosa',
+                title: 'mimosa',
+                description:
+                    'Questa grafica celebra la Festa della Donna con raffinatezza. Ideale per chi desidera confezionare un dono con eleganza, puntando sulla tradizione.',
+                detail: '',
+                pdf: '',
+                previewImg: '/desing-previews/mimosa.png',
+                password: 'design2026',
+            },
+            {
+                id: 'kit-girl-power',
+                title: 'girl pwr',
+                description:
+                    'Questa grafica rompe gli schemi tradizionali per celebrare la Donna, un manifesto di empowerment che trasforma ogni regalo in un messaggio di orgoglio e determinazione.',
+                detail: '',
+                pdf: '',
+                previewImg: '/desing-previews/girl-power.png',
+                password: 'design2026',
+            },
+        ],
     },
     {
-        id: 'ciligiesenzapuntini',
-        title: 'cherry crush',
-        description: 'Porta una ventata di dolcezza ai tuoi regali! Questo pattern gioca con la vivacità del rosso e la morbidezza del rosa per dare una sensazione gioiosa e solare. La grafica con ciliegie e fiocchetti aggiunge quel tocco di allegria e cura che rende ogni dono indimenticabile',
-        previewImg: '/desing-previews/ciliegie.png',
-        password: 'xoxosvc26',
-    },
-    {
-        id: 'doppiocuore',
-        title: 'lovely cloud',
-        description: 'Rossi profondi e rosa accesi si incontrano in un design che celebra amore in tutte le sue sfumature. Questa carta regalo rompe gli schemi classici grazie a una fascia diagonale ondulata che crea movimento e un gioco cromatico "inverted". È la scelta ideale per un regalo di San Valentino che vuole essere audace, moderno e pieno di passione.',
-        previewImg: '/desing-previews/doppiocuore.png',
-        password: 'xoxosvc26',
-    },
-    {
-        id: 'lollipopgrafica',
-        title: 'lolly-love',
-        description: 'Dolce come una caramella e vivace come una festa! Questa grafica trasforma il classico simbolo del cuore in un goloso lecca-lecca, sparpagliato in modo giocoso su un fondo rosa bubblegum.',
-        previewImg: '/desing-previews/lollipop.png',
-        password: 'xoxosvc26',
+        id: 'love',
+        title: 'Collezione Love',
+        description: 'La collezione San Valentino vive ora come Love: romantica, intensa e disponibile come secondo livello.',
+        tag: 'Collezione Love',
+        tagVariant: 'alt',
+        style: 'love',
+        kits: [
+            /*
+            {
+                id: 'xoxo',
+                title: 'xoxo vibes',
+                description:
+                    'Raffinata ed essenziale. Il fondo rosa antico fa da palcoscenico a un delicato pattern di "XOXO" scritti in corsivo.',
+                detail: 'Spazio negativo e lettere sinuose raccontano un amore fatto di silenzi e sussurri.',
+                pdf: '/xoxo.pdf',
+                previewImg: '/desing-previews/xoxo.png',
+                password: 'design2026',
+            },
+            */
+            {
+                id: 'ciligiesenzapuntini',
+                title: 'cherry crush',
+                description:
+                    'Porta una ventata di dolcezza ai tuoi regali! Questo pattern gioca con la vivacità del rosso e la morbidezza del rosa per dare una sensazione gioiosa e solare.',
+                detail: '',
+                pdf: '/ciligiesenzapuntini.pdf',
+                previewImg: '/desing-previews/ciliegie.png',
+                password: 'design2026',
+            },
+            {
+                id: 'doppiocuore',
+                title: 'lovely cloud',
+                description:
+                    'Rossi profondi e rosa accesi si incontrano in un design che celebra amore in tutte le sue sfumature.',
+                detail: '',
+                pdf: '/doppiocuore.pdf',
+                previewImg: '/desing-previews/doppiocuore.png',
+                password: 'design2026',
+            },
+            {
+                id: 'lollipopgrafica',
+                title: 'lolly-love',
+                description:
+                    'Dolce come una caramella e vivace come una festa! Questa grafica trasforma il classico simbolo del cuore in un goloso leccalecca.',
+                detail: '',
+                pdf: '/lollipopgrafica-1.pdf',
+                previewImg: '/desing-previews/lollipop.png',
+                password: 'design2026',
+            },
+        ],
     },
 ];

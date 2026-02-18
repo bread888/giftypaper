@@ -1,0 +1,624 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const kitSizes = [
+    {
+	 id: 'mini',
+        label: 'Piccoli Tesori',
+        detail:
+            'Dimensioni perfette, spreco zero. Basta ritagliare fogli enormi per impacchettare piccoli oggetti! Questo kit offre la misura ideale per rivestire perfettamente scatole di carte da gioco o piccoli cofanetti, garantendo angoli puliti e una chiusura impeccabile grazie al nostro nastro.',
+        price: 9.99,
+        tagline: 'Intimo, preciso',
+    },
+    {
+        id: 'medium',
+        label: 'Kit Passepartout',
+        detail:
+            'Non troppo piccolo, non troppo grande: questo kit è il vero "passepartout" del catalogo. Progettato per chi vuole regalare un libro, un capo di abbigliamento o una bottiglia speciale, garantendo una copertura totale.',
+        price: 16.99,
+        tagline: 'Equilibrio artigianale',
+    },
+    {
+        id: 'wrap',
+        label: 'The Essential',
+        detail:
+            'È il formato classico, quello che non può mancare in casa, pensato per chi vuole avvolgere regali voluminosi con un unico foglio, garantendo una precisione sartoriale e una copertura totale. Che sia una scatola di scarpe, un puzzle da 1000 pz o un piccolo elettrodomestico, ogni spigolo sarà vestito di eleganza.',
+        price: 19.99,
+        tagline: 'Scenografico e generoso',
+    },
+];
+
+const kitGraphics = [
+    {
+        id: 'mimosa',
+        label: 'Mimosa',
+        detail: 'Questa grafica celebra la Festa della Donna con raffinatezza. Ideale per chi desidera confezionare un dono con eleganza, puntando sulla tradizione.',
+        price: 0,
+        preview: 'var(--pale-gold)',
+        mood: 'Luce e freschezza',
+    },
+    {
+        id: 'girl-power',
+        label: 'Girl Power',
+        detail: 'Questa grafica rompe gli schemi tradizionali per celebrare la Donna, un manifesto di empowerment che trasforma ogni regalo in un messaggio di orgoglio e determinazione.',
+        price: 0,
+        preview: '#ff5bf6',
+        mood: 'Energia audace',
+    },
+    {
+        id: 'cherry-crush',
+        label: 'Cherry Crush',
+        detail: 'Porta una ventata di dolcezza ai tuoi regali! Questo pattern gioca con la vivacità del rosso e la morbidezza del rosa per dare una sensazione gioiosa e solare.',
+        price: 0,
+        preview: '#f24062',
+        mood: 'Dolcezza vivace',
+    },
+    {
+        id: 'lovely-cloud',
+        label: 'Lovely Cloud',
+        detail: 'Rossi profondi e rosa accesi si incontrano in un design che celebra amore in tutte le sue sfumature.',
+        price: 0,
+        preview: '#9e1b59',
+        mood: 'Passione heritage',
+    },
+    {
+        id: 'lolly-love',
+        label: 'Lolly Love',
+        detail: 'Dolce come una caramella e vivace come una festa! Questa grafica trasforma il classico simbolo del cuore in un goloso leccalecca su un fondo rosa bubblegum.',
+        price: 0,
+        preview: '#c13777',
+        mood: 'Romanticismo moderno',
+    },
+];
+
+const kitExtras = [
+    {
+        id: 'nastro',
+        label: 'Nastro di Raso',
+        detail: 'Nastro monocromo 20 mm in poliestere lucido.',
+        price: 1.0,
+        tone: 'Seducente',
+    },
+    {
+        id: 'tag',
+        label: 'Tag personalizzato',
+        detail: 'Etichette esclusive che matchano perfettamente con la fantasia della carta.',
+        price: 0.5,
+        tone: 'Dedica dorata',
+    },
+    {
+        id: 'bustina',
+        label: 'Bustina Dedica',
+        detail: 'Abbiamo trasformato la nostra carta da regalo in piccole bustine.',
+        price: 1.0,
+        tone: 'Protezione couture',
+    },
+];
+
+const composeDataJson = JSON.stringify({
+    sizes: kitSizes,
+    graphics: kitGraphics,
+    extras: kitExtras,
+}).replace(/</g, '\\u003c');
+---
+
+<!doctype html>
+<html lang="it">
+    <head>
+        <BaseHead
+            title="Componi il tuo Kit · GiftyPaper"
+            description="Scegli il formato, la grafica e gli extra per creare un kit Festa della Donna unico."
+        />
+    </head>
+    <body>
+        <Header />
+        <div class="compose-modal-overlay" id="compose-modal">
+            <div class="compose-modal">
+                <button type="button" class="modal-close" data-modal-close aria-label="Chiudi il messaggio">×</button>
+                <p class="hero-tag alt">Offerta speciale</p>
+                <h3>Extra gratuiti</h3>
+                <p>
+                    Seguici su TikTok o Instagram e mandaci un messaggio in direct con la parola chiave
+                    <strong>#KitFestaDonna</strong>: ti regaliamo nastro, tag e bustina in omaggio con il tuo kit.
+                </p>
+                <div class="compose-modal-cta">
+                    <a href="https://www.tiktok.com/@giftypaper" target="_blank" rel="noreferrer">Segui TikTok</a>
+                    <a href="https://www.instagram.com/giftypaper" target="_blank" rel="noreferrer">Segui Instagram</a>
+                </div>
+            </div>
+        </div>
+        <main class="site-shell compose-shell">
+            <section class="hero hero-fdd">
+                <h1>Componi il tuo KIT</h1>
+                <p class="hero-lead">
+                    Scegli formato, grafica e extra e lasciaci la richiesta. Per qualsiasi personalizzazione scrivici sui
+                    social o specificalo nella richiesta.
+                </p>
+            </section>
+
+            <section class="compose-area">
+                <div class="compose-steps">
+                    <div class="compose-step active" data-step="1">
+                        <div class="compose-step-header">
+                            <h2>1 · Scegli la base</h2>
+                            <p>Il formato definisce peso e feeling, cambia la texture e il supporto per i regali scelti.</p>
+                        </div>
+                        <div class="compose-options" data-options="size">
+                            {kitSizes.map((size) => (
+                                <button
+                                    type="button"
+                                    class="compose-card"
+                                    data-compose-size={size.id}
+                                    aria-pressed="false"
+                                >
+                                    <strong>{size.label}</strong>
+                                    <p>{size.detail}</p>
+                                </button>
+                            ))}
+                        </div>
+                        <div class="compose-step-actions">
+                            <button type="button" class="btn-pill alt pink-text" data-step-next>
+                                Vai alla grafica
+                            </button>
+                        </div>
+                    </div>
+                    <div class="compose-step" data-step="2">
+                        <div class="compose-step-header">
+                            <h2>2 · Mappa la grafica</h2>
+                            <p>Oscilla tra mimosa, energia neon o Love heritage, il colore guida l’architettura del kit.</p>
+                        </div>
+                        <div class="compose-options" data-options="graphic">
+                            {kitGraphics.map((graphic) => (
+                                <button
+                                    type="button"
+                                    class="compose-card"
+                                    data-compose-graphic={graphic.id}
+                                    aria-pressed="false"
+                                >
+                                    <strong>{graphic.label}</strong>
+                                    <p>{graphic.detail}</p>
+                                </button>
+                            ))}
+                        </div>
+                        <div class="compose-step-actions">
+                            <button type="button" class="secondary-link" data-step-prev>
+                                ← Torna indietro
+                            </button>
+                            <button type="button" class="btn-pill alt pink-text" data-step-next>
+                                Seleziona gli extra
+                            </button>
+                        </div>
+                    </div>
+                    <div class="compose-step" data-step="3">
+                        <div class="compose-step-header">
+                            <h2>3 · Extra couture</h2>
+                            <p>Tag, nastro o bustina finale: ogni dettaglio aggiunge un “peso emotivo” al totale.</p>
+                        </div>
+                        <div class="compose-options" data-options="extra">
+                            {kitExtras.map((extra) => (
+                                <button
+                                    type="button"
+                                    class="compose-card"
+                                    data-compose-extra={extra.id}
+                                    aria-pressed="false"
+                                >
+                                    <strong>{extra.label}</strong>
+                                    <p>{extra.detail}</p>
+                                </button>
+                            ))}
+                        </div>
+                        <div class="compose-step-actions">
+                            <button type="button" class="secondary-link" data-step-prev>
+                                ← Torna indietro
+                            </button>
+                        </div>
+                    </div>
+                    <div class="compose-step-indicator" aria-live="polite">
+                        <span data-step-indicator>Step 1 di 3</span>
+                    </div>
+                </div>
+
+            <aside class="compose-summary" id="compose-summary">
+                <p class="hero-tag alt">Anteprima kit</p>
+                    <div class="compose-preview">
+                        <div class="compose-preview-thumb" data-preview-thumb aria-hidden="true"></div>
+                        <div class="compose-preview-price">
+                            <span>Totale</span>
+                            <strong data-price>€0</strong>
+                        </div>
+                    </div>
+                    <div class="compose-shadow" aria-live="polite">
+                        <span data-preview-mood>Scegli una grafica</span>
+                        <span data-preview-tagline>Seleziona il formato</span>
+                    </div>
+                    <h3 data-summary-title>Seleziona un formato</h3>
+                    <ul data-summary-list>
+                        <li>Scegli la grafica</li>
+                        <li>Seleziona extras</li>
+                    </ul>
+                    <p data-summary-message>
+                        Quando confermi ti invieremo una bozza digitale con i colori e le texture finali.
+                    </p>
+                    <div class="compose-badges">
+                        <span class="badge" aria-live="polite" data-badge-size>Formato</span>
+                        <span class="badge" aria-live="polite" data-badge-graphic>Grafica</span>
+                        <span class="badge" aria-live="polite" data-badge-extra>Extras</span>
+                    </div>
+                    <form id="composeForm" class="compose-form">
+                        <label>
+                            <span>Nome e cognome</span>
+                            <input type="text" name="name" placeholder="Chi riceve il kit?" required />
+                        </label>
+                        <label>
+                            <span>Email</span>
+                            <input type="email" name="email" placeholder="tuo@esempio.com" required />
+                        </label>
+                        <label>
+                            <span>Note</span>
+                            <textarea name="notes" placeholder="Scrivi dettagli sul budget o sulle misure"></textarea>
+                        </label>
+                        <input type="hidden" name="selection" value="" />
+                        <p class="form-feedback" data-feedback role="status" aria-live="polite"></p>
+                        <button type="submit" class="btn-pill alt pink-text">Invia richiesta</button>
+                    </form>
+                    <p class="compose-hint">Ti risponderemo con una conferma entro 24h.</p>
+                </aside>
+            </section>
+        </main>
+        <Footer />
+        <script id="compose-data" type="application/json" set:html={composeDataJson}></script>
+        <script type="module">
+            (() => {
+                const dataElement = document.querySelector('#compose-data');
+                const composeData = dataElement ? JSON.parse(dataElement.textContent ?? '{}') : { sizes: [], graphics: [], extras: [] };
+                const searchParams = new URLSearchParams(window.location.search);
+                const preselectedSize = searchParams.get('kit');
+
+                const state = {
+                    size: null,
+                    graphic: null,
+                    extras: new Set(),
+                };
+
+                const summaryTitle = document.querySelector('[data-summary-title]');
+                const summaryList = document.querySelector('[data-summary-list]');
+                const summaryMessage = document.querySelector('[data-summary-message]');
+                const form = document.querySelector('#composeForm');
+                const notesField = form?.querySelector('textarea[name="notes"]');
+                const cards = document.querySelectorAll('.compose-card');
+                const selectionInput = form?.querySelector('input[name="selection"]');
+                const previewThumb = document.querySelector('[data-preview-thumb]');
+                const priceElement = document.querySelector('[data-price]');
+                const previewMood = document.querySelector('[data-preview-mood]');
+                const previewTagline = document.querySelector('[data-preview-tagline]');
+                const badgeSize = document.querySelector('[data-badge-size]');
+                const badgeGraphic = document.querySelector('[data-badge-graphic]');
+                const badgeExtra = document.querySelector('[data-badge-extra]');
+                const submitButton = form?.querySelector('button[type="submit"]');
+                const feedback = form?.querySelector('[data-feedback]');
+                const emailField = form?.querySelector('input[name="email"]');
+                const nameField = form?.querySelector('input[name="name"]');
+                const currencyFormatter = new Intl.NumberFormat('it-IT', {
+                    style: 'currency',
+                    currency: 'EUR',
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                });
+                const defaultSummaryTitle = summaryTitle?.textContent ?? 'Seleziona un formato';
+                const defaultSummaryMessage = summaryMessage?.textContent ?? 'Completa la selezione per inviare la richiesta.';
+
+                const steps = Array.from(document.querySelectorAll('.compose-step'));
+                const stepIndicator = document.querySelector('[data-step-indicator]');
+                let currentStep = 1;
+
+                const showStep = (step) => {
+                    const clampedStep = Math.min(Math.max(step, 1), steps.length);
+                    steps.forEach((element) => {
+                        const stepNumber = Number(element.getAttribute('data-step'));
+                        const isActive = stepNumber === clampedStep;
+                        element.classList.toggle('active', isActive);
+                        element.setAttribute('aria-hidden', !isActive);
+                    });
+                    currentStep = clampedStep;
+                    if (stepIndicator) {
+                        stepIndicator.textContent = `Step ${currentStep} di ${steps.length}`;
+                    }
+                };
+
+                const canAdvanceTo = (targetStep) => {
+                    if (targetStep === 2 && !state.size) {
+                        if (summaryTitle) {
+                            summaryTitle.textContent = 'Completa il formato';
+                        }
+                        if (summaryMessage) {
+                            summaryMessage.textContent = 'Scegli un formato prima di proseguire.';
+                        }
+                        return false;
+                    }
+                    if (targetStep === 3 && !state.graphic) {
+                        if (summaryTitle) {
+                            summaryTitle.textContent = 'Scegli la grafica';
+                        }
+                        if (summaryMessage) {
+                            summaryMessage.textContent = 'Scegli una grafica prima di proseguire.';
+                        }
+                        return false;
+                    }
+                    return true;
+                };
+
+                document.querySelectorAll('[data-step-next]').forEach((button) => {
+                    button.addEventListener('click', () => {
+                        const nextStep = currentStep + 1;
+                        if (nextStep > steps.length) return;
+                        if (!canAdvanceTo(nextStep)) {
+                            return;
+                        }
+                        showStep(nextStep);
+                    });
+                });
+
+                document.querySelectorAll('[data-step-prev]').forEach((button) => {
+                    button.addEventListener('click', () => showStep(currentStep - 1));
+                });
+
+                const findOption = (collection, id) => collection.find((item) => item.id === id) ?? null;
+
+                const formatExtras = (items) => {
+                    if (!items.length) {
+                        return 'Nessun extra selezionato';
+                    }
+                    return items.map((extra) => extra.label).join(', ');
+                };
+                const formatMessage = (sizeOption, graphicOption, extrasOptions) => {
+                    const lines = [];
+                    if (sizeOption) {
+                        lines.push(`Formato: ${sizeOption.label}`);
+                    }
+                    if (graphicOption) {
+                        lines.push(`Grafica: ${graphicOption.label}`);
+                    }
+                    if (extrasOptions.length) {
+                        lines.push(`Extra: ${formatExtras(extrasOptions)}`);
+                    } else {
+                        lines.push('Extra: nessuno');
+                    }
+                    const nameValue = nameField?.value?.trim();
+                    if (nameValue) {
+                        lines.push(`Nome: ${nameValue}`);
+                    }
+                    const notesValue = notesField?.value?.trim();
+                    if (notesValue) {
+                        lines.push(`Note: ${notesValue}`);
+                    }
+                    return lines.join('\n');
+                };
+
+                showStep(1);
+                const updateSummary = () => {
+                    const sizeOption = findOption(composeData.sizes, state.size);
+                    const graphicOption = findOption(composeData.graphics, state.graphic);
+                    const extrasOptions = Array.from(state.extras)
+                        .map((extraKey) => findOption(composeData.extras, extraKey))
+                        .filter(Boolean);
+
+                    const lines = [
+                        sizeOption ? `Formato: ${sizeOption.label}` : 'Scegli il formato',
+                        graphicOption ? `Grafica: ${graphicOption.label}` : 'Scegli la grafica',
+                        extrasOptions.length > 0 ? `Extra: ${formatExtras(extrasOptions)}` : 'Seleziona almeno un extra',
+                    ];
+
+                    summaryList.innerHTML = lines.map((line) => `<li>${line}</li>`).join('');
+
+                    const summaryParts = [];
+                    if (sizeOption) summaryParts.push(sizeOption.label);
+                    if (graphicOption) summaryParts.push(graphicOption.label);
+                    if (extrasOptions.length) summaryParts.push('extra');
+
+                    summaryMessage.textContent =
+                        summaryParts.length > 0
+                            ? `Kit composto con ${summaryParts.join(', ')}`
+                            : 'Completa la selezione per inviare la richiesta.';
+
+                    const total =
+                        (sizeOption?.price ?? 0) +
+                        (graphicOption?.price ?? 0) +
+                        extrasOptions.reduce((sum, option) => sum + (option?.price ?? 0), 0);
+
+                    priceElement.textContent = currencyFormatter.format(total);
+
+                    const previewColor = graphicOption?.preview ?? 'linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05))';
+                    if (previewThumb) {
+                        previewThumb.style.background = previewColor;
+                    }
+                    if (previewMood) {
+                        previewMood.textContent = graphicOption ? graphicOption.mood : 'Scegli una grafica';
+                    }
+                    if (previewTagline) {
+                        previewTagline.textContent = sizeOption?.tagline ?? 'Seleziona il formato';
+                    }
+
+                    if (selectionInput) {
+                        selectionInput.value = JSON.stringify({
+                            size: sizeOption?.label ?? null,
+                            graphic: graphicOption?.label ?? null,
+                            extras: extrasOptions.map((option) => option.label),
+                            price: total,
+                        });
+                    }
+                    if (notesField && !notesField.dataset.userModified) {
+                        const extrasText = extrasOptions.length ? ` con extras ${formatExtras(extrasOptions)}` : '';
+                        const baseText = sizeOption ? `${sizeOption.label}` : 'un formato';
+                        const graphicText = graphicOption ? `${graphicOption.label}` : 'una grafica';
+                        notesField.value = `Vorrei ricevere ${baseText} con la grafica ${graphicText}${extrasText}.`;
+                    }
+                    submitButton?.toggleAttribute('disabled', !state.size);
+                    if (badgeSize) {
+                        badgeSize.textContent = sizeOption ? `Formato: ${sizeOption.label}` : 'Formato (da scegliere)';
+                        badgeSize.classList.toggle('badge-pending', !sizeOption);
+                    }
+                    if (badgeGraphic) {
+                        badgeGraphic.textContent = graphicOption ? `Grafica: ${graphicOption.label}` : 'Grafica (da scegliere)';
+                        badgeGraphic.classList.toggle('badge-pending', !graphicOption);
+                    }
+                    if (badgeExtra) {
+                        badgeExtra.textContent = extrasOptions.length
+                            ? `Extras (${extrasOptions.length})`
+                            : 'Extra (aggiungi almeno uno)';
+                        badgeExtra.classList.toggle('badge-pending', extrasOptions.length === 0);
+                    }
+                };
+
+                cards.forEach((card) => {
+                    card.addEventListener('click', () => {
+                        const sizeKey = card.dataset.composeSize;
+                        const graphicKey = card.dataset.composeGraphic;
+                        const extraKey = card.dataset.composeExtra;
+
+                        if (sizeKey) {
+                            state.size = sizeKey;
+                            cards.forEach((item) => {
+                                if (item.dataset.composeSize) {
+                                    item.classList.toggle('active', item === card);
+                                    item.setAttribute('aria-pressed', item === card);
+                                }
+                            });
+                        }
+
+                        if (graphicKey) {
+                            state.graphic = graphicKey;
+                            cards.forEach((item) => {
+                                if (item.dataset.composeGraphic) {
+                                    item.classList.toggle('active', item === card);
+                                    item.setAttribute('aria-pressed', item === card);
+                                }
+                            });
+                        }
+
+                        if (extraKey) {
+                            if (state.extras.has(extraKey)) {
+                                state.extras.delete(extraKey);
+                            } else {
+                                state.extras.add(extraKey);
+                            }
+                            card.classList.toggle('active', state.extras.has(extraKey));
+                            card.setAttribute('aria-pressed', state.extras.has(extraKey));
+                        }
+
+                        updateSummary();
+                    });
+                });
+
+                notesField?.addEventListener('input', () => {
+                    notesField.dataset.userModified = 'true';
+                });
+
+                const modal = document.getElementById('compose-modal');
+                const closeButton = modal?.querySelector('[data-modal-close]');
+                const toggleScroll = (lock) => {
+                    document.documentElement.classList.toggle('no-scroll', lock);
+                };
+
+                const closeModal = () => {
+                    if (!modal) return;
+                    modal.classList.remove('active');
+                    toggleScroll(false);
+                };
+
+                const openModal = () => {
+                    if (!modal) return;
+                    modal.classList.add('active');
+                    toggleScroll(true);
+                };
+
+                closeButton?.addEventListener('click', closeModal);
+                modal?.addEventListener('click', (event) => {
+                    if (event.target === modal) {
+                        closeModal();
+                    }
+                });
+                document.addEventListener('keydown', (event) => {
+                    if (event.key === 'Escape') {
+                        closeModal();
+                    }
+                });
+                openModal();
+
+                form?.addEventListener('submit', async (event) => {
+                    event.preventDefault();
+                    summaryTitle.textContent = defaultSummaryTitle;
+                    summaryMessage.textContent = defaultSummaryMessage;
+
+                    if (!state.size || !state.graphic) {
+                        summaryTitle.textContent = 'Completa la composizione';
+                        summaryMessage.textContent = 'Scegli formato e grafica prima di inviare.';
+                        return;
+                    }
+
+                    const sizeOption = findOption(composeData.sizes, state.size);
+                    const graphicOption = findOption(composeData.graphics, state.graphic);
+                    const extrasOptions = Array.from(state.extras)
+                        .map((extraKey) => findOption(composeData.extras, extraKey))
+                        .filter(Boolean);
+
+                    const email = (emailField?.value ?? '').toString().trim();
+                    const message = formatMessage(sizeOption, graphicOption, extrasOptions);
+                    const kitCode = sizeOption?.label ?? 'Componi il tuo kit';
+
+                    if (!email || !message) {
+                        if (feedback) {
+                            feedback.textContent = 'Inserisci la mail e descrivi la tua richiesta.';
+                        }
+                        return;
+                    }
+
+                    if (feedback) {
+                        feedback.textContent = '';
+                    }
+
+                    submitButton?.setAttribute('disabled', 'true');
+                    try {
+                        const response = await fetch('/api/contact', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                email,
+                                message,
+                                kitCode,
+                            }),
+                        });
+
+                        if (!response.ok) {
+                            const errorText = await response.text().catch(() => '');
+                            throw new Error(errorText || 'Errore nell\'invio della richiesta.');
+                        }
+
+                        if (feedback) {
+                            feedback.textContent = 'Richiesta inviata! Ti risponderemo al più presto.';
+                        }
+                        form.reset();
+                        notesField?.removeAttribute('data-user-modified');
+                        updateSummary();
+                    } catch (error) {
+                        console.error(error);
+                        if (feedback) {
+                            feedback.textContent = 'Qualcosa è andato storto, riprova tra poco.';
+                        }
+                    } finally {
+                        submitButton?.removeAttribute('disabled');
+                    }
+                });
+
+                if (preselectedSize) {
+                    const initialCard = document.querySelector(`[data-compose-size="${preselectedSize}"]`);
+                    initialCard?.click();
+                }
+                updateSummary();
+            })();
+        </script>
+    </body>
+</html>

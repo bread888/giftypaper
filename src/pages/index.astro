@@ -1,33 +1,36 @@
-﻿---
+---
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 
-const collectionMoments = [
-    {
+const kits = [
+	{
         size: 'Piccolo',
-        code: 'SVCGP0001',
         title: 'Piccoli Tesori',
         description:
-            'Dimensioni perfette, spreco zero. Basta ritagliare fogli enormi per impacchettare piccoli oggetti! Questo kit offre la misura ideale per rivestire perfettamente scatole di carte da gioco o piccoli cofanetti, garantendo angoli puliti e una chiusura impeccabile grazie al nastro incluso.',
+            'Dimensioni perfette, spreco zero. Basta ritagliare fogli enormi per impacchettare piccoli oggetti! Questo kit offre la misura ideale per rivestire perfettamente scatole di carte da gioco o piccoli cofanetti, garantendo angoli puliti e una chiusura impeccabile grazie al nostro nastro.',
         image: '/Piccolo.png',
+        collection: 'Collezione Love',
+        composeSizeId: 'mini',
     },
     {
         size: 'Medio',
-        code: 'SVCGP0002',
         title: 'Kit Passepartout',
         description:
             'Non troppo piccolo, non troppo grande: questo kit è il vero "passepartout" del catalogo. Progettato per chi vuole regalare un libro, un capo di abbigliamento o una bottiglia speciale, garantendo una copertura totale.',
         image: '/Medio.png',
+        collection: 'Collezione Love',
+        composeSizeId: 'medium',
     },
     {
         size: 'Grande',
-        code: 'SVCGP0003',
         title: 'The Essential',
         description:
             'È il formato classico, quello che non può mancare in casa, pensato per chi vuole avvolgere regali voluminosi con un unico foglio, garantendo una precisione sartoriale e una copertura totale. Che sia una scatola di scarpe, un puzzle da 1000 pz o un piccolo elettrodomestico, ogni spigolo sarà vestito di eleganza.',
         image: '/Grande.png',
+        collection: 'Collezione Love',
+        composeSizeId: 'wrap',
     },
 ];
 ---
@@ -35,157 +38,43 @@ const collectionMoments = [
 <!doctype html>
 <html lang="it">
     <head>
-        <BaseHead title={`San Valentino · ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+        <BaseHead title={`Festa della Donna · ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
     </head>
     <body>
         <Header />
         <main class="site-shell">
-            <section class="hero">
-                <p class="hero-tag">Edizione limitata 2026</p>
-                <h1>San Valentino Collection</h1>
-                <p class="hero-lead">
-                    L'arte di regalare emozioni un foglio alla volta. 
-                </p>
+            <section class="hero hero-fdd">
+                <p class="hero-tag">Edizione Limitata 2026</p>
+                <h1>Festa della Donna Collection</h1>
+                <p class="hero-lead">Dalla dolcezza della mimosa alla forza del girl power: incarta la tua energia</p>
                 <div class="hero-meta">
                     <span>Produzione artigianale · Dalla carta si fa il regalo</span>
                 </div>
             </section>
 
             <section id="collezione" class="sequence">
-                {collectionMoments.map((moment) => (
+                {kits.map((moment) => (
                     <article class="product-card" key={moment.code}>
                         <div class="product-visual">
-                            <p class="size-pill">{moment.size}</p>
-                            <img src={moment.image} alt={`Packaging ${moment.title} della San Valentino Collection`} loading="lazy" />
+                            {moment.size && <p class="size-pill">{moment.size}</p>}
+                            <img
+                                src={moment.image}
+                                alt={`Packaging ${moment.title} della ${moment.collection}`}
+                                loading="lazy"
+                            />
                         </div>
                         <div class="product-copy">
                             <p class="product-code">{moment.code}</p>
                             <h3>{moment.title}</h3>
                             <p>{moment.description}</p>
-                            <a
-                                href="#contact-form"
-                                class="card-link"
-                                data-kit-code={moment.code}
-                                data-kit-title={moment.title}
-                            >
-                                Prenota questo kit
+                            <a href={`/compose?kit=${moment.composeSizeId}`} class="card-link card-link--large">
+                                COMPONI QUESTO KIT
                             </a>
                         </div>
                     </article>
                 ))}
             </section>
 
-            <section id="contact-form" class="closing contact-section">
-                <p>
-                	Per prenotazioni, contattaci sui seguenti social e scegli un momento speciale per il ritiro o la consegna a domicilio.
-                </p>
-                <div class="closing-links">
-                    <a href="https://www.tiktok.com/@giftypaper" target="_blank" rel="noreferrer">TikTok</a>
-                    <a href="https://www.instagram.com/giftypaper" target="_blank" rel="noreferrer">Instagram</a>
-                </div>
-                <form id="contactForm" class="contact-form" novalidate>
-                    <label>
-                        <span>La tua mail</span>
-                        <input type="email" name="email" placeholder="nome@esempio.com" required />
-                    </label>
-                    <label>
-                        <span>Descrivi richieste e budget</span>
-                        <textarea name="message" placeholder="Quanto ti serve? Quali formati preferisci?" required></textarea>
-                    </label>
-                    <input type="hidden" name="kitCode" value="" />
-                    <p class="form-feedback" data-feedback role="status" aria-live="polite"></p>
-                    <button type="submit" class="btn-pill alt pink-text">INVIA RICHIESTA</button>
-                </form>
-            </section>
-            <!-- Nota: questo form invia i dati a /api/contact invece di aprire il client di posta -->
-            <script type="module">
-                document.addEventListener('DOMContentLoaded', () => {
-                    const form = document.querySelector('#contactForm');
-                    if (!form) {
-                        return;
-                    }
-
-                    const feedback = document.querySelector('[data-feedback]');
-                    const messageField = form.querySelector('textarea[name="message"]');
-                    const kitField = form.querySelector('input[name="kitCode"]');
-                    const submitButton = form.querySelector('button[type="submit"]');
-                    const kitLinks = document.querySelectorAll('[data-kit-code]');
-
-                    const buildKitMessage = (code, title) => {
-                        if (!code || !title) {
-                            return '';
-                        }
-
-                        return `Vorrei avere informazioni in merito a ${code}, ${title}`;
-                    };
-
-                    kitLinks.forEach((link) => {
-                        link.addEventListener('click', () => {
-                            const kitCode = link.dataset.kitCode ?? '';
-                            const kitTitle = link.dataset.kitTitle ?? '';
-                            if (kitField) {
-                                kitField.value = kitCode;
-                            }
-                            if (messageField) {
-                                messageField.value = buildKitMessage(kitCode, kitTitle);
-                                messageField.focus();
-                            }
-                        });
-                    });
-
-                    form.addEventListener('submit', async (event) => {
-                        event.preventDefault();
-                        if (feedback) {
-                            feedback.textContent = '';
-                        }
-                        if (!form.reportValidity()) {
-                            return;
-                        }
-
-                        const formData = new FormData(form);
-                        const payload = {
-                            email: (formData.get('email') ?? '').toString().trim(),
-                            message: (formData.get('message') ?? '').toString().trim(),
-                            kitCode: (formData.get('kitCode') ?? '').toString().trim(),
-                        };
-
-                        if (!payload.email || !payload.message) {
-                            if (feedback) {
-                                feedback.textContent = 'Inserisci la mail e descrivi la tua richiesta.';
-                            }
-                            return;
-                        }
-
-                        submitButton?.setAttribute('disabled', 'true');
-                        try {
-                            const response = await fetch('/api/contact', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify(payload),
-                            });
-
-                            if (!response.ok) {
-                                const errorText = await response.text().catch(() => '');
-                                throw new Error(errorText || 'Errore nell\'invio della richiesta.');
-                            }
-
-                            if (feedback) {
-                                feedback.textContent = 'Richiesta inviata! Ti risponderemo al più presto.';
-                            }
-                            form.reset();
-                        } catch (error) {
-                            console.error(error);
-                            if (feedback) {
-                                feedback.textContent = 'Qualcosa è andato storto, riprova tra poco.';
-                            }
-                        } finally {
-                            submitButton?.removeAttribute('disabled');
-                        }
-                    });
-                });
-            </script>
         </main>
         <Footer />
     </body>

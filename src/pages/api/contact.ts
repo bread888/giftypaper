@@ -29,7 +29,7 @@ const buildRequestBody = (email: string, message: string, kitCode: string) => {
         reply_to: {
             email,
         },
-        subject: 'Nuova richiesta San Valentino',
+        subject: 'Nuova richiesta Festa della Donna',
         content: [
             {
                 type: 'text/plain',
