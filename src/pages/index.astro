@@ -2,80 +2,201 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { SITE_TITLE } from '../consts';
+import { designCollections } from '../content/designs';
 
-const kits = [
-	{
-        size: 'Piccolo',
-        title: 'Piccoli Tesori',
+const fdpCollection = designCollections.find((collection) => collection.id === 'fdp');
+const heroKits = fdpCollection?.kits ?? [];
+
+const novita = [
+    {
+        id: 'bomboniere',
+        title: 'Bomboniere',
         description:
-            'Dimensioni perfette, spreco zero. Basta ritagliare fogli enormi per impacchettare piccoli oggetti! Questo kit offre la misura ideale per rivestire perfettamente scatole di carte da gioco o piccoli cofanetti, garantendo angoli puliti e una chiusura impeccabile grazie al nostro nastro.',
-        image: '/Piccolo.png',
-        collection: 'Collezione Love',
-        composeSizeId: 'mini',
+            'Uniamo utile e dilettevole, le nostre carte da regalo si trasformano in meravigliose bomboniere, pronte ad ospitare confetti, tag o piccoli ricordi.',
+        visual:
+            'linear-gradient(135deg, rgba(29, 59, 210, 0.9), rgba(99, 172, 255, 0.3))',
+        videoEmbed: 'https://www.tiktok.com/embed/7616786426025364758?autoplay=1&loop=1&muted=1',
+        videoLink: 'https://www.tiktok.com/@giftypaper',
     },
     {
-        size: 'Medio',
-        title: 'Kit Passepartout',
+        id: 'nominal-graphics',
+        title: 'Grafiche personalizzabili',
         description:
-            'Non troppo piccolo, non troppo grande: questo kit è il vero "passepartout" del catalogo. Progettato per chi vuole regalare un libro, un capo di abbigliamento o una bottiglia speciale, garantendo una copertura totale.',
-        image: '/Medio.png',
-        collection: 'Collezione Love',
-        composeSizeId: 'medium',
-    },
-    {
-        size: 'Grande',
-        title: 'The Essential',
-        description:
-            'È il formato classico, quello che non può mancare in casa, pensato per chi vuole avvolgere regali voluminosi con un unico foglio, garantendo una precisione sartoriale e una copertura totale. Che sia una scatola di scarpe, un puzzle da 1000 pz o un piccolo elettrodomestico, ogni spigolo sarà vestito di eleganza.',
-        image: '/Grande.png',
-        collection: 'Collezione Love',
-        composeSizeId: 'wrap',
+            'Personalizza la tua carta da regalo: guarda come le tue idee diventano realtà.',
+        visual: 'linear-gradient(135deg, rgba(8, 29, 62, 0.95), rgba(114, 214, 255, 0.8))',
+        videoEmbed: 'https://www.tiktok.com/embed/7614197996128980246?autoplay=1&loop=1&muted=1',
+        videoLink: 'https://www.tiktok.com/@giftypaper',
     },
 ];
+
 ---
 
 <!doctype html>
 <html lang="it">
     <head>
-        <BaseHead title={`Festa della Donna · ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+        <BaseHead
+            title={`Festa del Papà Collection · ${SITE_TITLE}`}
+            description="Collezione Festa del Papà."
+        />
     </head>
     <body>
         <Header />
         <main class="site-shell">
-            <section class="hero hero-fdd">
+            <section class="hero hero-fdp">
                 <p class="hero-tag">Edizione Limitata 2026</p>
-                <h1>Festa della Donna Collection</h1>
-                <p class="hero-lead">Dalla dolcezza della mimosa alla forza del girl power: incarta la tua energia</p>
-                <div class="hero-meta">
-                    <span>Produzione artigianale · Dalla carta si fa il regalo</span>
+                <h1>Festa del Papà Collection</h1>
+                <p class="hero-lead">
+					Celebra l'eroe di ogni giorno con le nostre carte da regalo esclusive.
+                </p>
+                <div class="hero-meta hero-meta-fdp">
+                    <span>Produzione artigianale · Componi e spediamo in 24h!</span>
                 </div>
             </section>
 
-            <section id="collezione" class="sequence">
-                {kits.map((moment) => (
-                    <article class="product-card" key={moment.code}>
-                        <div class="product-visual">
-                            {moment.size && <p class="size-pill">{moment.size}</p>}
-                            <img
-                                src={moment.image}
-                                alt={`Packaging ${moment.title} della ${moment.collection}`}
-                                loading="lazy"
-                            />
-                        </div>
-                        <div class="product-copy">
-                            <p class="product-code">{moment.code}</p>
-                            <h3>{moment.title}</h3>
-                            <p>{moment.description}</p>
-                            <a href={`/compose?kit=${moment.composeSizeId}`} class="card-link card-link--large">
-                                COMPONI QUESTO KIT
-                            </a>
-                        </div>
-                    </article>
-                ))}
+            <section class="novita-section">
+                <div class="novita-header" data-animate-card>
+                    <p class="hero-tag-alt">Novità</p>
+                    <h2>Bomboniere e Grafiche Personalizzate</h2>
+                    <p>Bomboniere e grafiche personalizzabili: i due lanci principali che introducono fantasia e dedicazioni personalizzate.</p>
+                </div>
+                <div class="novita-grid">
+                    {novita.map((item) => (
+                        <article class="novita-card" data-animate-card key={item.id}>
+                            <div class="novita-visual" style={`background: ${item.visual};`}>
+                                {item.videoEmbed ? (
+                                    <div class="novita-video-frame">
+                                        <iframe
+                                            src={item.videoEmbed}
+                                            loading="lazy"
+                                            allow="autoplay; fullscreen"
+                                            allowFullScreen
+                                            title={`TikTok preview ${item.title}`}
+                                        ></iframe>
+                                    </div>
+                                ) : null}
+                            </div>
+                            <div class="novita-copy">
+                                <h3>{item.title}</h3>
+                                <p>{item.description}</p>
+                                <p class="novita-detail">{item.detail}</p>
+                                {item.videoLink ? (
+                                    <p class="novita-video-hint">
+                                        Guarda i video completi su&nbsp;
+                                        <a href={item.videoLink} target="_blank" rel="noreferrer">
+                                            TikTok
+                                        </a>
+                                        .
+                                    </p>
+                                ) : null}
+                            </div>
+                        </article>
+                    ))}
+                </div>
             </section>
 
+            <section class="papa-collection">
+                <article class="design-collection" aria-label="Design Festa del Papà">
+                    <header class="design-collection-header">
+                        <p class="hero-tag alt">Anteprime esclusive</p>
+                        <h2>Nuovi Design SUPER DAD e BEST DAD</h2>
+                    </header>
+                    <div class="design-grid">
+                        {heroKits.map((kit) => (
+                            <article class="design-card" data-kit={kit.id} data-animate-card key={kit.id}>
+                                <div
+                                    class={`design-thumb${kit.previewVisible ? ' is-ready' : ''}`}
+                                    role="presentation"
+                                    oncontextmenu="return false;"
+                                >
+                                    {kit.previewImage ? (
+                                        <img
+                                            src={kit.previewImage}
+                                            alt={`Anteprima ${kit.title}`}
+                                            loading="lazy"
+                                            decoding="async"
+                                            draggable="false"
+                                        />
+                                    ) : null}
+                                </div>
+                                <div class="design-copy">
+                                    <p class="design-label">{fdpCollection?.tag ?? 'Design'}</p>
+                                    <h3>{kit.title}</h3>
+                                    <p class="design-description">{kit.description}</p>
+                                    <p class="design-detail">{kit.detail}</p>
+                                </div>
+                                <div class="design-actions">
+                                    <a class="btn-pill alt pink-text" href={`/compose?design=${kit.id}`}>
+                                        Componimi
+                                    </a>
+                                </div>
+                            </article>
+                        ))}
+                    </div>
+                </article>
+            </section>
         </main>
         <Footer />
+        <script type="module">
+            (() => {
+                const cards = document.querySelectorAll('[data-animate-card]');
+                if (!cards.length) return;
+
+                let lastScrollY = window.scrollY;
+                let scrollDirection = 'down';
+                const intersectionStates = new Map();
+
+                const shouldHide = ({ rect }) => rect.bottom <= 0;
+
+                const handleScroll = () => {
+                    const current = window.scrollY;
+                    const delta = current - lastScrollY;
+                    if (delta > 2) {
+                        scrollDirection = 'down';
+                    } else if (delta < -2) {
+                        scrollDirection = 'up';
+                    }
+                    lastScrollY = current;
+
+                    if (scrollDirection === 'down') {
+                        intersectionStates.forEach(({ isIntersecting }, card) => {
+                            if (isIntersecting) {
+                                card.classList.add('is-visible');
+                            }
+                        });
+                    } else {
+                        intersectionStates.forEach((state, card) => {
+                            if (state && !state.isIntersecting && shouldHide(state)) {
+                                card.classList.remove('is-visible');
+                            }
+                        });
+                    }
+                };
+
+                window.addEventListener('scroll', handleScroll, { passive: true });
+
+                const observer = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach((entry) => {
+                            const state = {
+                                isIntersecting: entry.isIntersecting,
+                                rect: entry.boundingClientRect,
+                            };
+                            intersectionStates.set(entry.target, state);
+                            if (entry.isIntersecting && scrollDirection === 'down') {
+                                entry.target.classList.add('is-visible');
+                            } else if (!entry.isIntersecting && scrollDirection === 'up' && shouldHide(state)) {
+                                entry.target.classList.remove('is-visible');
+                            }
+                        });
+                    },
+                    {
+                        threshold: 0.35,
+                    }
+                );
+
+                cards.forEach((card) => observer.observe(card));
+            })();
+        </script>
     </body>
 </html>

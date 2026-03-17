@@ -4,7 +4,8 @@ export type DesignKit = {
     description: string;
     detail: string;
     pdf: string;
-    previewImg: string;
+    previewImage?: string;
+    previewVisible?: boolean;
     password: string;
 };
 
@@ -20,29 +21,30 @@ export type DesignCollection = {
 
 export const designCollections: DesignCollection[] = [
     {
-        id: 'fdd',
-        title: 'Festa della Donna 2026',
-        description: 'Nuove grafiche dedicate alla mimosa e al potere femminile, guardate ma protette dal watermark.',
-        tag: 'Nuovi design',
+        id: 'fdp',
+        title: 'Festa del Papà 2026',
+        description: 'Dal blu elettrico dell’alba al riflesso azzurro del tramonto: una collezione dedicata al papà che pensa oltre il regalo.',
+        tag: 'Festa del Papà',
+        tagVariant: 'alt',
         kits: [
             {
-                id: 'kit-mimosa',
-                title: 'mimosa',
+                id: 'super-dad-kit',
+                title: 'SUPER DAD',
                 description:
-                    'Questa grafica celebra la Festa della Donna con raffinatezza. Ideale per chi desidera confezionare un dono con eleganza, puntando sulla tradizione.',
-                detail: '',
+                    'Questa carta da regalo celebra la forza e il coraggio con un design dinamico e impattante. Una scelta perfetta per chi desidera trasformare un semplice dono in un tributo speciale per una persona straordinaria.',
                 pdf: '',
-                previewImg: '/desing-previews/mimosa.png',
+                previewImage: '/desing-previews/superdad.png',
+                previewVisible: true,
                 password: 'design2026',
             },
             {
-                id: 'kit-girl-power',
-                title: 'girl pwr',
+                id: 'best-dad-kit',
+                title: 'BEST DAD',
                 description:
-                    'Questa grafica rompe gli schemi tradizionali per celebrare la Donna, un manifesto di empowerment che trasforma ogni regalo in un messaggio di orgoglio e determinazione.',
-                detail: '',
+                    'Questa grafica simbolezza la paternità: il momento in cui una mano più grande stringe una più piccola, promettendo protezione e amore eterno.',
                 pdf: '',
-                previewImg: '/desing-previews/girl-power.png',
+                previewImage: '/desing-previews/valigetta.png',
+                previewVisible: true,
                 password: 'design2026',
             },
         ],
@@ -55,46 +57,36 @@ export const designCollections: DesignCollection[] = [
         tagVariant: 'alt',
         style: 'love',
         kits: [
-            /*
-            {
-                id: 'xoxo',
-                title: 'xoxo vibes',
-                description:
-                    'Raffinata ed essenziale. Il fondo rosa antico fa da palcoscenico a un delicato pattern di "XOXO" scritti in corsivo.',
-                detail: 'Spazio negativo e lettere sinuose raccontano un amore fatto di silenzi e sussurri.',
-                pdf: '/xoxo.pdf',
-                previewImg: '/desing-previews/xoxo.png',
-                password: 'design2026',
-            },
-            */
             {
                 id: 'ciligiesenzapuntini',
                 title: 'cherry crush',
                 description:
-                    'Porta una ventata di dolcezza ai tuoi regali! Questo pattern gioca con la vivacità del rosso e la morbidezza del rosa per dare una sensazione gioiosa e solare.',
+                    'Porta una ventata di dolcezza ai regali con un pattern che mixa rosso e rosa per creare vibrazioni gioiose.',
                 detail: '',
                 pdf: '/ciligiesenzapuntini.pdf',
-                previewImg: '/desing-previews/ciliegie.png',
+                previewImage: '/desing-previews/ciliegie.png',
+                previewVisible: true,
                 password: 'design2026',
             },
             {
                 id: 'doppiocuore',
                 title: 'lovely cloud',
-                description:
-                    'Rossi profondi e rosa accesi si incontrano in un design che celebra amore in tutte le sue sfumature.',
+                description: 'Rossi profondi e rosa accesi si incontrano in un design che celebra l’amore in tutte le sue sfumature.',
                 detail: '',
                 pdf: '/doppiocuore.pdf',
-                previewImg: '/desing-previews/doppiocuore.png',
+                previewImage: '/desing-previews/doppiocuore.png',
+                previewVisible: true,
                 password: 'design2026',
             },
             {
                 id: 'lollipopgrafica',
                 title: 'lolly-love',
                 description:
-                    'Dolce come una caramella e vivace come una festa! Questa grafica trasforma il classico simbolo del cuore in un goloso leccalecca.',
+                    'Dolce come una caramella e vivace come una festa: il cuore diventa un lecca-lecca bubblegum.',
                 detail: '',
                 pdf: '/lollipopgrafica-1.pdf',
-                previewImg: '/desing-previews/lollipop.png',
+                previewImage: '/desing-previews/lollipop.png',
+                previewVisible: true,
                 password: 'design2026',
             },
         ],

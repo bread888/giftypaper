@@ -12,17 +12,17 @@ const designCollectionJson = JSON.stringify(designCollections).replace(/</g, '\\
 	<head>
 		<BaseHead
 			title="Design | GiftyPaper"
-			description="Scopri i design firmati GiftyPaper e accedi alle anteprime protette da password."
+			description="Scopri i design firmati GiftyPaper."
 		/>
 	</head>
 	<body>
 		<Header />
 		<main class="site-shell">
-			<section class="hero hero-fdd">	
+			<section class="hero hero-fdp">
+				<p class="hero-tag">Festa del Papà Collection</p>
 				<h1>Design</h1>
 				<p class="hero-lead">
-					Gli artwork vengono mostrati in anteprima con watermark, per visualizzarli puoi utilizzare il tasto ANTEPRIMA. La password la trovi
-					sui nostri canali TikTok e Instagram.
+					Scopri i design firmati GiftyPaper e componi il tuo kit da qui.
 				</p>
 			</section>
 
@@ -37,18 +37,28 @@ const designCollectionJson = JSON.stringify(designCollections).replace(/</g, '\\
 							<p>{collection.description}</p>
 						</header>
 						<div class="design-grid" aria-label={`Anteprime ${collection.title}`}>
-							{collection.kits.map((kit) => (
-								<article class="design-card" key={kit.id} data-kit={kit.id}>
-									<div class="design-thumb" role="presentation"></div>
+						{collection.kits.map((kit) => (
+							<article class="design-card" key={kit.id} data-kit={kit.id}>
+								<div class={`design-thumb${kit.previewVisible ? ' is-ready' : ''}`} role="presentation" oncontextmenu="return false;">
+									{kit.previewImage ? (
+										<img
+											src={kit.previewImage}
+											alt={`Anteprima ${kit.title}`}
+											loading="lazy"
+											decoding="async"
+											draggable="false"
+										/>
+									) : null}
+								</div>
 									<div>
 										<h3>{kit.title}</h3>
 										<p>{kit.description}</p>
 										<p>{kit.detail}</p>
 									</div>
 									<div class="design-actions">
-										<button type="button" class="preview-btn btn-pill alt pink-text" data-kit={kit.id}>
-											Anteprima
-										</button>
+										<a class="btn-pill alt pink-text" href={`/compose?design=${kit.id}`}>
+											Componimi
+										</a>
 									</div>
 								</article>
 							))}
@@ -122,7 +132,7 @@ const designCollectionJson = JSON.stringify(designCollections).replace(/</g, '\\
 					if (value.toLowerCase() === kit.password.toLowerCase()) {
 						const card = document.querySelector(`[data-kit="${kit.id}"] .design-thumb`);
 						if (card) {
-							card.style.backgroundImage = `url('${kit.previewImg}')`;
+							card.classList.add('is-ready');
 							card.classList.add('unlocked');
 						}
 						if (feedback) feedback.textContent = "Password corretta, ora vedi l'anteprima.";
