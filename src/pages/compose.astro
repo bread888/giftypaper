@@ -28,6 +28,14 @@ const kitSizes = [
         price: 19.99,
         tagline: 'Scenografico e generoso',
     },
+    {
+        id: 'bomboniere',
+        label: 'Bomboniere',
+        detail:
+            'Pensato per richieste dedicate e composizioni su misura: dopo l’ordine ti contattiamo per definire insieme il preventivo e i dettagli finali.',
+        price: null,
+        tagline: 'Su misura, da definire',
+    },
 ];
 
 const kitGraphics = [
@@ -422,12 +430,14 @@ const composeDataJson = JSON.stringify({
                             ? `Kit composto con ${summaryParts.join(', ')}`
                             : 'Completa la selezione per inviare la richiesta.';
 
+                    const sizePrice = sizeOption?.price ?? 0;
+                    const isQuoteOnlyBase = sizeOption?.id === 'bomboniere';
                     const total =
-                        (sizeOption?.price ?? 0) +
+                        sizePrice +
                         (graphicOption?.price ?? 0) +
                         extrasOptions.reduce((sum, option) => sum + (option?.price ?? 0), 0);
 
-                    priceElement.textContent = currencyFormatter.format(total);
+                    priceElement.textContent = isQuoteOnlyBase ? 'Da definire' : currencyFormatter.format(total);
 
                     const previewColor = graphicOption?.preview ?? 'linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05))';
                     if (previewThumb) {
@@ -445,7 +455,7 @@ const composeDataJson = JSON.stringify({
                             size: sizeOption?.label ?? null,
                             graphic: graphicOption?.label ?? null,
                             extras: extrasOptions.map((option) => option.label),
-                            price: total,
+                            price: isQuoteOnlyBase ? null : total,
                         });
                     }
                     if (notesField && !notesField.dataset.userModified) {
