@@ -1,4 +1,4 @@
-export type DesignKit = {
+﻿export type DesignKit = {
     id: string;
     title: string;
     description: string;
@@ -22,9 +22,9 @@ export type DesignCollection = {
 export const designCollections: DesignCollection[] = [
     {
         id: 'fdp',
-        title: 'Festa del Papà 2026',
-        description: 'Dal blu elettrico dell’alba al riflesso azzurro del tramonto: una collezione dedicata al papà che pensa oltre il regalo.',
-        tag: 'Festa del Papà',
+        title: 'Festa del PapÃ  2026',
+        description: 'Dal blu elettrico dellâ€™alba al riflesso azzurro del tramonto: una collezione dedicata al papÃ  che pensa oltre il regalo.',
+        tag: 'Festa del PapÃ ',
         tagVariant: 'alt',
         kits: [
             {
@@ -41,7 +41,7 @@ export const designCollections: DesignCollection[] = [
                 id: 'best-dad-kit',
                 title: 'BEST DAD',
                 description:
-                    'Questa grafica simbolezza la paternità: il momento in cui una mano più grande stringe una più piccola, promettendo protezione e amore eterno.',
+                    'Questa grafica simbolizza la paternitÃ : il momento in cui una mano piÃ¹ grande stringe una piÃ¹ piccola, promettendo protezione e amore eterno.',
                 pdf: '',
                 previewImage: '/desing-previews/valigetta.png',
                 previewVisible: true,
@@ -71,7 +71,7 @@ export const designCollections: DesignCollection[] = [
             {
                 id: 'doppiocuore',
                 title: 'lovely cloud',
-                description: 'Rossi profondi e rosa accesi si incontrano in un design che celebra l’amore in tutte le sue sfumature.',
+                description: 'Rossi profondi e rosa accesi si incontrano in un design che celebra lâ€™amore in tutte le sue sfumature.',
                 detail: '',
                 pdf: '/doppiocuore.pdf',
                 previewImage: '/desing-previews/doppiocuore.png',
@@ -92,3 +92,4 @@ export const designCollections: DesignCollection[] = [
         ],
     },
 ];
+

@@ -1646,6 +1646,12 @@ main,
     pointer-events: none;
 }
 
+@media (hover: hover) and (pointer: fine) {
+    .design-thumb:hover img {
+        transform: scale(1.015);
+    }
+}
+
 .design-thumb.is-ready img,
 .design-thumb.unlocked img {
     opacity: 1;
@@ -1731,6 +1737,25 @@ main,
 
 .design-actions a:hover {
     transform: translateY(-1px);
+}
+
+@media (hover: none), (pointer: coarse) {
+    .design-thumb img {
+        filter: none;
+        transition: opacity 0.25s ease;
+    }
+
+    .design-thumb::before {
+        opacity: 0.18;
+    }
+
+    .design-thumb::after {
+        opacity: 0.12;
+    }
+
+    .design-actions a:hover {
+        transform: none;
+    }
 }
 
 .preview-modal {
