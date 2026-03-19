@@ -438,6 +438,8 @@ main,
     transition: opacity 1s ease, transform 1s ease;
     overflow: hidden;
     min-width: 0;
+    content-visibility: auto;
+    contain-intrinsic-size: 420px 560px;
 }
 
 .novita-card.is-visible {
@@ -1609,6 +1611,8 @@ main,
     gap: 1rem;
     min-height: 280px;
     min-width: 0;
+    content-visibility: auto;
+    contain-intrinsic-size: 420px 640px;
 }
 
 .design-card h3 {
@@ -1740,17 +1744,38 @@ main,
 }
 
 @media (hover: none), (pointer: coarse) {
+    body {
+        background-attachment: scroll;
+    }
+
+    .site-header {
+        backdrop-filter: none;
+    }
+
+    .design-card,
+    .novita-card,
+    .product-card {
+        box-shadow: 0 14px 30px rgba(116, 77, 144, 0.12);
+    }
+
+    .design-card[data-kit="super-dad-kit"] .design-thumb,
+    .design-card[data-kit="best-dad-kit"] .design-thumb {
+        animation: none;
+        box-shadow: inset 0 0 14px rgba(255, 255, 255, 0.22), 0 12px 22px rgba(160, 110, 180, 0.1);
+    }
+
     .design-thumb img {
         filter: none;
         transition: opacity 0.25s ease;
+        transform: none;
     }
 
     .design-thumb::before {
-        opacity: 0.18;
+        opacity: 0.12;
     }
 
     .design-thumb::after {
-        opacity: 0.12;
+        opacity: 0.08;
     }
 
     .design-actions a:hover {

@@ -4,7 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { designCollections } from '../content/designs';
 
-const fdpCollection = designCollections.find((collection) => collection.id === 'fdp');
+const graphicCollections = designCollections.filter((collection) => collection.id === 'fdp' || collection.id === 'love');
 
 const kitSizes = [
     {
@@ -19,7 +19,7 @@ const kitSizes = [
         id: 'medium',
         label: 'Kit Passepartout',
         detail:
-            'Non troppo piccolo, non troppo grande: questo kit Ã¨ il vero "passepartout" del catalogo. Progettato per chi vuole regalare un libro, un capo di abbigliamento o una bottiglia speciale, garantendo una copertura totale.',
+            'Non troppo piccolo, non troppo grande: questo kit è il vero "passepartout" del catalogo. Progettato per chi vuole regalare un libro, un capo di abbigliamento o una bottiglia speciale, garantendo una copertura totale.',
         price: 16.99,
         tagline: 'Equilibrio artigianale',
     },
@@ -27,7 +27,7 @@ const kitSizes = [
         id: 'wrap',
         label: 'The Essential',
         detail:
-            'Ãˆ il formato classico, quello che non puÃ² mancare in casa, pensato per chi vuole avvolgere regali voluminosi con un unico foglio, garantendo una precisione sartoriale e una copertura totale. Che sia una scatola di scarpe, un puzzle da 1000 pz o un piccolo elettrodomestico, ogni spigolo sarÃ  vestito di eleganza.',
+            'È il formato classico, quello che non può mancare in casa, pensato per chi vuole avvolgere regali voluminosi con un unico foglio, garantendo una precisione sartoriale e una copertura totale. Che sia una scatola di scarpe, un puzzle da 1000 pz o un piccolo elettrodomestico, ogni spigolo sarà vestito di eleganza.',
         price: 19.99,
         tagline: 'Scenografico e generoso',
     },
@@ -35,24 +35,26 @@ const kitSizes = [
         id: 'bomboniere',
         label: 'Bomboniere',
         detail:
-            'Pensato per richieste dedicate e composizioni su misura: dopo lâ€™ordine ti contattiamo per definire insieme il preventivo e i dettagli finali.',
+            'Pensato per richieste dedicate e composizioni su misura: dopo l’ordine ti contattiamo per definire insieme il preventivo e i dettagli finali.',
         price: null,
         tagline: 'Su misura, da definire',
     },
 ];
 
-const kitGraphics = (fdpCollection?.kits ?? []).map((kit, index) => ({
-    id: kit.id,
-    label: kit.title,
-    detail: kit.description,
-    price: 0,
-    preview: kit.previewImage
-        ? `url("${kit.previewImage}") center/cover no-repeat`
-        : index === 0
-          ? 'linear-gradient(135deg, rgba(var(--pale-gold), 0.95), rgba(255, 255, 255, 0.25))'
-          : 'linear-gradient(135deg, rgba(22, 32, 66, 0.95), rgba(255, 91, 246, 0.25))',
-    mood: fdpCollection?.tag ?? 'Festa del Papà',
-}));
+const kitGraphics = graphicCollections.flatMap((collection, collectionIndex) =>
+    collection.kits.map((kit, kitIndex) => ({
+        id: kit.id,
+        label: kit.title,
+        detail: kit.description,
+        price: 0,
+        preview: kit.previewImage
+            ? `url("${kit.previewImage}") center/cover no-repeat`
+            : collectionIndex === 0 && kitIndex === 0
+              ? 'linear-gradient(135deg, rgba(var(--pale-gold), 0.95), rgba(255, 255, 255, 0.25))'
+              : 'linear-gradient(135deg, rgba(22, 32, 66, 0.95), rgba(255, 91, 246, 0.25))',
+        mood: collection.tag,
+    })),
+);
 
 const kitExtras = [
     {
@@ -89,7 +91,7 @@ const composeDataJson = JSON.stringify({
 <html lang="it">
     <head>
         <BaseHead
-            title="Componi il tuo Kit Â· GiftyPaper"
+            title="Componi il tuo Kit · GiftyPaper"
             description="Scegli il formato, la grafica e gli extra per creare un kit Festa della Donna unico."
         />
     </head>
@@ -97,7 +99,7 @@ const composeDataJson = JSON.stringify({
         <Header />
         <div class="compose-modal-overlay" id="compose-modal">
             <div class="compose-modal">
-                <button type="button" class="modal-close" data-modal-close aria-label="Chiudi il messaggio">Ã—</button>
+                <button type="button" class="modal-close" data-modal-close aria-label="Chiudi il messaggio">×</button>
                 <p class="hero-tag alt">Offerta speciale</p>
                 <h3>Extra gratuiti</h3>
                 <p>
@@ -123,7 +125,7 @@ const composeDataJson = JSON.stringify({
                 <div class="compose-steps">
                     <div class="compose-step active" data-step="1">
                         <div class="compose-step-header">
-                            <h2>1 Â· Scegli la base</h2>
+                            <h2>1 · Scegli la base</h2>
                             <p>Il formato definisce peso e feeling, cambia la texture e il supporto per i regali scelti.</p>
                         </div>
                         <div class="compose-options" data-options="size">
@@ -147,8 +149,8 @@ const composeDataJson = JSON.stringify({
                     </div>
                     <div class="compose-step" data-step="2">
                         <div class="compose-step-header">
-                            <h2>2 Â· Mappa la grafica</h2>
-                            <p>Oscilla tra mimosa, energia neon o Love heritage, il colore guida lâ€™architettura del kit.</p>
+                            <h2>2 · Mappa la grafica</h2>
+                            <p>Oscilla tra mimosa, energia neon o Love heritage, il colore guida l’architettura del kit.</p>
                         </div>
                         <div class="compose-options" data-options="graphic">
                             {kitGraphics.map((graphic) => (
@@ -165,7 +167,7 @@ const composeDataJson = JSON.stringify({
                         </div>
                         <div class="compose-step-actions">
                             <button type="button" class="secondary-link" data-step-prev>
-                                â† Torna indietro
+                                ← Torna indietro
                             </button>
                             <button type="button" class="btn-pill alt pink-text" data-step-next>
                                 Seleziona gli extra
@@ -174,8 +176,8 @@ const composeDataJson = JSON.stringify({
                     </div>
                     <div class="compose-step" data-step="3">
                         <div class="compose-step-header">
-                            <h2>3 Â· Extra couture</h2>
-                            <p>Tag, nastro o bustina finale: ogni dettaglio aggiunge un â€œpeso emotivoâ€ al totale.</p>
+                            <h2>3 · Extra couture</h2>
+                            <p>Tag, nastro o bustina finale: ogni dettaglio aggiunge un “peso emotivo” al totale.</p>
                         </div>
                         <div class="compose-options" data-options="extra">
                             {kitExtras.map((extra) => (
@@ -192,7 +194,7 @@ const composeDataJson = JSON.stringify({
                         </div>
                         <div class="compose-step-actions">
                             <button type="button" class="secondary-link" data-step-prev>
-                                â† Torna indietro
+                                ← Torna indietro
                             </button>
                         </div>
                     </div>
@@ -207,7 +209,7 @@ const composeDataJson = JSON.stringify({
                         <div class="compose-preview-thumb" data-preview-thumb aria-hidden="true"></div>
                         <div class="compose-preview-price">
                             <span>Totale</span>
-                            <strong data-price>â‚¬0</strong>
+                            <strong data-price>€0</strong>
                         </div>
                     </div>
                     <div class="compose-shadow" aria-live="polite">
@@ -581,7 +583,7 @@ const composeDataJson = JSON.stringify({
                         }
 
                         if (feedback) {
-                            feedback.textContent = 'Richiesta inviata! Ti risponderemo al piÃ¹ presto.';
+                            feedback.textContent = 'Richiesta inviata! Ti risponderemo al più presto.';
                         }
                         form.reset();
                         notesField?.removeAttribute('data-user-modified');
@@ -589,7 +591,7 @@ const composeDataJson = JSON.stringify({
                     } catch (error) {
                         console.error(error);
                         if (feedback) {
-                            feedback.textContent = 'Qualcosa Ã¨ andato storto, riprova tra poco.';
+                            feedback.textContent = 'Qualcosa è andato storto, riprova tra poco.';
                         }
                     } finally {
                         submitButton?.removeAttribute('disabled');
